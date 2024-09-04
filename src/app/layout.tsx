@@ -19,11 +19,11 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Onchain App Template',
-  description: 'Built with OnchainKit',
+  title: 'TickIt',
+  description: 'Buy tickets with your friends',
   openGraph: {
-    title: 'Onchain App Template',
-    description: 'Built with OnchainKit',
+    title: 'TickIt',
+    description: 'Buy tickets with your friends',
     images: [`${NEXT_PUBLIC_URL}/vibes/vibes-19.png`],
   },
 };
