@@ -2,23 +2,27 @@
 pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
-import {Counter} from "../src/Counter.sol";
+import {EventRegistry} from "../src/EventRegistry.sol";
 
-contract CounterTest is Test {
-    Counter public counter;
+contract EventRegistryTest is Test {
+    EventRegistry public eventRegistry;
 
     function setUp() public {
-        counter = new Counter();
-        counter.setNumber(0);
+        eventRegistry = new EventRegistry();
     }
 
-    function test_Increment() public {
-        counter.increment();
-        assertEq(counter.number(), 1);
-    }
+    function test_RegisterEvent() external {
+        bytes32 eventHash = eventRegistry.registerEvent(
+            "My Test Event",
+            "My super based event which you should all come to",
+            "London, UK",
+            uint32(block.timestamp),
+            uint32(block.timestamp + 7 days),
+            uint32(block.timestamp + 14 days),
+            100,
+            4
+        );
 
-    function testFuzz_SetNumber(uint256 x) public {
-        counter.setNumber(x);
-        assertEq(counter.number(), x);
+        eventRegistry.getEventById(eventHash);
     }
 }
