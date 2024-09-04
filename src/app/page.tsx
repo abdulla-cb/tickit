@@ -1,39 +1,11 @@
 'use client';
-import Footer from 'src/components/Footer';
-import TransactionWrapper from 'src/components/TransactionWrapper';
-import WalletWrapper from 'src/components/WalletWrapper';
-import { useAccount } from 'wagmi';
-import LoginButton from '../components/LoginButton';
-import SignupButton from '../components/SignupButton';
+import Button from '../components/Button';
 
 export default function Page() {
-  const { address } = useAccount();
-
   return (
-    <div className="flex h-full w-96 max-w-full flex-col px-1 md:w-[1008px]">
-      <section className="mt-6 mb-6 flex w-full flex-col md:flex-row">
-        <div className="flex w-full flex-row items-center justify-between gap-2 md:gap-0">
-		<div>
-			<h1 className="font-extrabold text-xl">TickIt</h1>
-			<p className="font-light italic">Buy tickets with your friends</p>
-		</div>
-          <div className="flex items-center gap-3">
-            <SignupButton />
-            {!address && <LoginButton />}
-          </div>
-        </div>
-      </section>
-      <section className="templateSection flex w-full flex-col items-center justify-center gap-4 rounded-xl bg-gray-100 px-2 py-4 md:grow">
-        {address ? (
-          <TransactionWrapper />
-        ) : (
-          <WalletWrapper
-            className="w-[450px] max-w-full"
-            text="Sign in to transact"
-          />
-        )}
-      </section>
-      <Footer />
-    </div>
+    <section className="flex w-full flex-col items-center justify-center gap-4 rounded-xl px-2 py-4 md:grow">
+      <Button>Promote your event</Button>
+      <Button>Browse events</Button>
+    </section>
   );
 }

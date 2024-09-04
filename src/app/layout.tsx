@@ -6,6 +6,9 @@ import '@coinbase/onchainkit/styles.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import dynamic from 'next/dynamic';
 
+import Footer from 'src/components/Footer';
+import Header from 'src/components/Header';
+
 const OnchainProviders = dynamic(
   () => import('src/components/OnchainProviders'),
   {
@@ -34,7 +37,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex items-center justify-center">
-        <OnchainProviders>{children}</OnchainProviders>
+        <OnchainProviders>
+          <div className="flex h-full w-96 max-w-full flex-col px-1 md:w-[1008px]">
+            <Header />
+            {children}
+            <Footer />
+          </div>
+        </OnchainProviders>
       </body>
     </html>
   );
