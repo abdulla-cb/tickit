@@ -8,7 +8,7 @@ export default function Page() {
       <Link href="/promote">
         <Button>Promote your event</Button>
       </Link>
-      <Link href="/buy-ticket">
+      <Link href="/buy-tickets">
         <Button>Browse events</Button>
       </Link>
     </>
