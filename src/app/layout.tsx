@@ -40,7 +40,9 @@ export default function RootLayout({
         <OnchainProviders>
           <div className="flex h-full w-96 max-w-full flex-col px-1 md:w-[1008px]">
             <Header />
-            {children}
+            <section className="flex w-full flex-col items-center justify-center gap-4 rounded-xl px-2 py-4 md:grow">
+              {children}
+            </section>
             <Footer />
           </div>
         </OnchainProviders>

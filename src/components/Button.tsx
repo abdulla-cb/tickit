@@ -1,4 +1,4 @@
-import { cn, color, text, pressable } from '@coinbase/onchainkit/theme';
+import { cn, color, pressable, text } from '@coinbase/onchainkit/theme';
 
 type ButtonProps = {
   children?: React.ReactNode;
