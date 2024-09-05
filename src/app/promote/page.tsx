@@ -20,7 +20,7 @@ export default function Page() {
     <Transaction
       contracts={[
         {
-			...eventRegistryConfig,
+          ...eventRegistryConfig,
           functionName: 'registerEvent',
           args: [
             'Event Title',
