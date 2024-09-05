@@ -11,6 +11,7 @@ import {
   BASE_SEPOLIA_CHAIN_ID,
   eventRegistryContractAddress,
 } from '../../constants';
+import { eventRegistryConfig } from 'src/generated';
 
 const abi = eventRegistryArtifact.abi;
 
@@ -19,8 +20,7 @@ export default function Page() {
     <Transaction
       contracts={[
         {
-          address: eventRegistryContractAddress,
-          abi,
+			...eventRegistryConfig,
           functionName: 'registerEvent',
           args: [
             'Event Title',
