@@ -116,6 +116,13 @@ contract EventRegistry {
             revert AlreadyHasGroup();
         }
 
+        if (ticketBallotSeed[eventId] == EMPTY_BYTES32 && block.timestamp >= eventInfo.ticketSaleStart) {
+			// this is the first user in the regular sale. do the state transition
+        ticketBallotSeed[eventId] = keccak256(abi.encode(block.prevrandao));
+        // snapshot the number of tickets requested in ballot
+        ticketBallotAllocation[eventId] = ticketsRequestedCount[eventId];
+		}
+
         // If we are in ballot mode, let anyone apply for tickets.
         if (ticketBallotSeed[eventId] == EMPTY_BYTES32) {
             FriendGroup memory group = FriendGroup({groupId: ++nextFriendGroup, groupOwner: msg.sender});

@@ -17,7 +17,6 @@ contract TicketNFTTest is Test {
 
         address[] memory noFriends = new address[](0);
         vm.warp(block.timestamp + 4 days);
-		eventRegistry.issueTickets(eventId);
 		vm.prank(alice);
 		vm.expectEmit();
 		emit EventRegistry.TicketReceived(eventId, alice);
