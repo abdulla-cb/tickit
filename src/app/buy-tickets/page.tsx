@@ -24,9 +24,9 @@ export default function Page() {
           {(paginatedEvents ?? []).map((event, i) => {
             return (
               <li key={i}>
-			  <Link href={`/buy-tickets/${event.hash}`}>
-                <EventCard event={event.info} />
-				</Link>
+                <Link href={`/buy-tickets/${event.hash}`}>
+                  <EventCard event={event.info} />
+                </Link>
               </li>
             );
           })}
@@ -34,7 +34,8 @@ export default function Page() {
       )}
 
       <p>
-        Showing {offset}-{offset + limit} of {isNaN(Number(totalNumberOfEvents)) ? 0 : Number(totalNumberOfEvents)}
+        Showing {offset}-{offset + limit} of{' '}
+        {isNaN(Number(totalNumberOfEvents)) ? 0 : Number(totalNumberOfEvents)}
       </p>
     </div>
   );

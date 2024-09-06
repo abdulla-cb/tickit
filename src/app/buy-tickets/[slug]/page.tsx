@@ -2,12 +2,18 @@
 
 import { MultiSelect } from '@/components/ui/multi-select';
 import { BASE_SEPOLIA_CHAIN_ID } from '@/constants';
-import { Transaction, TransactionButton, TransactionStatus, TransactionStatusAction, TransactionStatusLabel } from '@coinbase/onchainkit/transaction';
+import {
+  Transaction,
+  TransactionButton,
+  TransactionStatus,
+  TransactionStatusAction,
+  TransactionStatusLabel,
+} from '@coinbase/onchainkit/transaction';
 import { notFound } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import EventCard from 'src/components/EventCard';
 import {
-    eventRegistryConfig,
+  eventRegistryConfig,
   l2ResolverConfig,
   useReadBasefriendsGetFollowNodes,
   useReadEventRegistryGetEventById,
@@ -24,9 +30,11 @@ export default function Page({ params }: { params: { slug: string } }) {
   }
 
   // Get data for this event
-  const { data: result, error: resultError } = useReadEventRegistryGetEventById({
-    args: [params.slug as `0x${string}`],
-  });
+  const { data: result, error: resultError } = useReadEventRegistryGetEventById(
+    {
+      args: [params.slug as `0x${string}`],
+    },
+  );
 
   // Get the users node (from their address)
   const { data: userNode } = useReadReverseRegistrarNode({
@@ -39,25 +47,32 @@ export default function Page({ params }: { params: { slug: string } }) {
   });
 
   const { data: friendData } = useReadContracts({
-    contracts: (friendNodes ?? []).flatMap((node) => ([{
-      ...l2ResolverConfig,
-      functionName: 'name',
-      args: [node as `0x${string}`],
-    },{...l2ResolverConfig,
-	functionName:'addr',
-	args: [node as `0x${string}`]}])),
+    contracts: (friendNodes ?? []).flatMap((node) => [
+      {
+        ...l2ResolverConfig,
+        functionName: 'name',
+        args: [node as `0x${string}`],
+      },
+      {
+        ...l2ResolverConfig,
+        functionName: 'addr',
+        args: [node as `0x${string}`],
+      },
+    ]),
   });
 
   const isDisabled = useMemo(() => {
-	  if(!result) {return}
-	  if (selectedFriends.length > (result.maxGroupSize-1)) {
-		  return true
-	  }
-	  return false
-  }, [selectedFriends, result])
+    if (!result) {
+      return;
+    }
+    if (selectedFriends.length > result.maxGroupSize - 1) {
+      return true;
+    }
+    return false;
+  }, [selectedFriends, result]);
 
   if (resultError) {
-	  notFound()
+    notFound();
   }
 
   if (!result || !userNode || !friendNodes) {
@@ -66,8 +81,8 @@ export default function Page({ params }: { params: { slug: string } }) {
   }
 
   const friendsList = friendNodes.map((node, i) => ({
-    label: friendData ? (friendData[2*i].result ?? 'Unknown') : 'Unknown',
-    value: friendData ? (friendData[2*i+1].result ?? 'Unknown') : 'Unknown',
+    label: friendData ? friendData[2 * i].result ?? 'Unknown' : 'Unknown',
+    value: friendData ? friendData[2 * i + 1].result ?? 'Unknown' : 'Unknown',
   }));
 
   return (
@@ -83,13 +98,17 @@ export default function Page({ params }: { params: { slug: string } }) {
             onValueChange={setSelectedFriends}
             defaultValue={selectedFriends}
             placeholder="Choose your friends"
-            maxCount={result.maxGroupSize-1}
+            maxCount={result.maxGroupSize - 1}
           />
           <p>
             If you are lucky enough to get tickets, you and all your friends
             will be able to attend together
           </p>
-		  {isDisabled && <p className="text-destructive">The maximum group size for this event is {result.maxGroupSize}</p>}
+          {isDisabled && (
+            <p className="text-destructive">
+              The maximum group size for this event is {result.maxGroupSize}
+            </p>
+          )}
         </>
       ) : (
         <div>
@@ -101,15 +120,19 @@ export default function Page({ params }: { params: { slug: string } }) {
           <p>You can still apply for tickets on your own though!</p>
         </div>
       )}
-	  <Transaction
-	  contracts = {[{...eventRegistryConfig,
-		  functionName: 'requestTicket',
-	  args: [params.slug, selectedFriends]}]}
+      <Transaction
+        contracts={[
+          {
+            ...eventRegistryConfig,
+            functionName: 'requestTicket',
+            args: [params.slug, selectedFriends],
+          },
+        ]}
         className="w-[450px]"
         chainId={BASE_SEPOLIA_CHAIN_ID}
         onError={(err) => console.error(err)}
-		onSuccess={() => window.alert("Contratulations!")}
-	  >
+        onSuccess={() => window.alert('Contratulations!')}
+      >
         <TransactionButton
           disabled={isDisabled}
           text="Apply for tickets"
@@ -119,7 +142,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           <TransactionStatusLabel />
           <TransactionStatusAction />
         </TransactionStatus>
-	  </Transaction>
+      </Transaction>
     </div>
   );
 }
