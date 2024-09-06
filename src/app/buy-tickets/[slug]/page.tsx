@@ -3,6 +3,7 @@
 import { MultiSelect } from '@/components/ui/multi-select';
 import { BASE_SEPOLIA_CHAIN_ID } from '@/constants';
 import { Transaction, TransactionButton, TransactionStatus, TransactionStatusAction, TransactionStatusLabel } from '@coinbase/onchainkit/transaction';
+import { notFound } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import EventCard from 'src/components/EventCard';
 import {
@@ -23,7 +24,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   }
 
   // Get data for this event
-  const { data: result } = useReadEventRegistryGetEventById({
+  const { data: result, error: resultError } = useReadEventRegistryGetEventById({
     args: [params.slug as `0x${string}`],
   });
 
@@ -32,17 +33,19 @@ export default function Page({ params }: { params: { slug: string } }) {
     args: [address as `0x${string}`],
   });
 
-  // get their follows
+  // get their follows nodes
   const { data: friendNodes } = useReadBasefriendsGetFollowNodes({
     args: [userNode ?? '0x'],
   });
 
   const { data: friendData } = useReadContracts({
-    contracts: (friendNodes ?? []).map((node) => ({
+    contracts: (friendNodes ?? []).flatMap((node) => ([{
       ...l2ResolverConfig,
       functionName: 'name',
       args: [node as `0x${string}`],
-    })),
+    },{...l2ResolverConfig,
+	functionName:'addr',
+	args: [node as `0x${string}`]}])),
   });
 
   const isDisabled = useMemo(() => {
@@ -53,8 +56,8 @@ export default function Page({ params }: { params: { slug: string } }) {
 	  return false
   }, [selectedFriends, result])
 
-  if (!result) {
-    return "We couldn't find that event. Sorry!";
+  if (resultError) {
+	  notFound()
   }
 
   if (!result || !userNode || !friendNodes) {
@@ -63,8 +66,8 @@ export default function Page({ params }: { params: { slug: string } }) {
   }
 
   const friendsList = friendNodes.map((node, i) => ({
-    value: node,
-    label: friendData ? friendData[i].result ?? 'Unknown' : 'Unknown',
+    label: friendData ? (friendData[2*i].result ?? 'Unknown') : 'Unknown',
+    value: friendData ? (friendData[2*i+1].result ?? 'Unknown') : 'Unknown',
   }));
 
   return (
@@ -101,11 +104,11 @@ export default function Page({ params }: { params: { slug: string } }) {
 	  <Transaction
 	  contracts = {[{...eventRegistryConfig,
 		  functionName: 'requestTicket',
-	  args: [params.slug, []]}]}
+	  args: [params.slug, selectedFriends]}]}
         className="w-[450px]"
         chainId={BASE_SEPOLIA_CHAIN_ID}
         onError={(err) => console.error(err)}
-		onSuccess={(res) => window.alert("Contratulations!")}
+		onSuccess={() => window.alert("Contratulations!")}
 	  >
         <TransactionButton
           disabled={isDisabled}
