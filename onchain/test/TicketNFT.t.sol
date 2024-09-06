@@ -3,44 +3,33 @@ pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
 import {EventRegistry} from "../src/EventRegistry.sol";
+import {Ticket} from "../src/Ticket.sol";
 
-contract BallotTest is Test {
+contract TicketNFTTest is Test {
     EventRegistry public eventRegistry;
     bytes32 eventId;
-    uint256 constant testUsersCount = 20;
-    address[] users;
+	address alice = makeAddr("alice");
+	Ticket ticket;
 
     function setUp() public {
         eventRegistry = new EventRegistry();
         eventId = _registerEvent();
 
-        for (uint256 i = 0; i < testUsersCount; i++) {
-            users.push(makeAddr(string.concat("test user #", string(abi.encode(i)))));
-            _requestTicketAlone(users[i]);
-        }
+        address[] memory noFriends = new address[](0);
         vm.warp(block.timestamp + 4 days);
+		eventRegistry.issueTickets(eventId);
+		vm.prank(alice);
+		vm.expectEmit();
+		emit EventRegistry.TicketReceived(eventId, alice);
+		eventRegistry.requestTicket(eventId, noFriends);
+
+		ticket = eventRegistry.getTicketContract(eventId);
     }
 
-    function test_CanIssueTickets() external {
-        vm.expectEmit();
-        emit EventRegistry.TicketsAllocated(eventId, 20);
-        eventRegistry.issueTickets(eventId);
-    }
+	function test_nftMetadata() public view {
+		// string memory metadata = ticket.tokenURI(1);
+	}
 
-    function test_RevertCantIssueTicketsTwice() external {
-        eventRegistry.issueTickets(eventId);
-        vm.expectRevert();
-        eventRegistry.issueTickets(eventId);
-    }
-
-    function test_canClaimTickets() external {
-        eventRegistry.issueTickets(eventId);
-
-        for (uint256 i = 0; i < testUsersCount; i++) {
-            vm.prank(users[i]);
-            eventRegistry.claimTickets(eventId);
-        }
-    }
 
     function _requestTicketAlone(address user) internal {
         address[] memory noFriends = new address[](0);
@@ -49,17 +38,13 @@ contract BallotTest is Test {
     }
 
     function _registerEvent() internal returns (bytes32) {
-        return _registerEvent(0);
-    }
-
-    function _registerEvent(uint256 seed) internal returns (bytes32) {
         // max capacity of 10
         // max group size of 4
         // event starts in 3 days
         return eventRegistry.registerEvent(
             "My Test Event",
             "My super based event which you should all come to",
-            string(abi.encodePacked(keccak256(abi.encode(seed)))),
+			"Event Location",
             uint32(block.timestamp + 3 days),
             uint32(block.timestamp + 7 days),
             uint32(block.timestamp + 14 days),
