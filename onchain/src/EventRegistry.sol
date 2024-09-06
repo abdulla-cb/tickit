@@ -132,13 +132,7 @@ contract EventRegistry {
             }
             // we don't need to track the group info as the tickets can already be minted
             ticketsRequestedCount[eventId] += numberOfTicketsRequested;
-            Ticket ticketContract = getTicketContract[eventId];
-            ticketContract.mint(msg.sender);
-            emit TicketReceived(eventId, msg.sender);
-            for (uint256 i = 0; i < friends.length; i++) {
-                ticketContract.mint(friends[i]);
-                emit TicketReceived(eventId, friends[i]);
-            }
+			_distributeTickets(eventId, msg.sender, friends);
         }
     }
 
@@ -175,17 +169,8 @@ contract EventRegistry {
 
         // maybe you got lucky... maybe you didn't
         // this function might overflow - need to add checks
-        if (
-            uint256(seed) % ticketBallotAllocation[eventId]
-                < eventInfo.maxEventCapacity * (groupFriends[groupId].length + 1)
-        ) {
-            Ticket ticketContract = getTicketContract[eventId];
-            ticketContract.mint(msg.sender);
-            emit TicketReceived(eventId, msg.sender);
-            for (uint256 i = 0; i < groupFriends[groupId].length; i++) {
-                ticketContract.mint(groupFriends[groupId][i]);
-                emit TicketReceived(eventId, groupFriends[groupId][i]);
-            }
+        if (checkSeed(seed, ticketBallotAllocation[eventId], eventInfo.maxEventCapacity, groupFriends[groupId].length+1)) {
+			_distributeTickets(eventId, msg.sender, groupFriends[groupId]);
         }
     }
 
@@ -198,14 +183,26 @@ contract EventRegistry {
             revert TicketSaleHasntStarted();
         }
         bytes32 seed = keccak256(abi.encode(ticketBallotSeed[eventId], groupId));
-        if (
-            uint256(seed) % ticketBallotAllocation[eventId]
-                < eventInfo.maxEventCapacity * (groupFriends[groupId].length + 1)
-        ) {
+        if (checkSeed(seed, ticketBallotAllocation[eventId], eventInfo.maxEventCapacity, groupFriends[groupId].length+1)) {
             return groupFriends[groupId].length + 1;
         }
         return 0;
     }
+
+	function _distributeTickets(bytes32 eventId, address groupOwner, address[] memory groupMembers) internal {
+            Ticket ticketContract = getTicketContract[eventId];
+            ticketContract.mint(groupOwner);
+            emit TicketReceived(eventId, groupOwner);
+            for (uint256 i = 0; i < groupMembers.length; i++) {
+                ticketContract.mint(groupMembers[i]);
+                emit TicketReceived(eventId, groupMembers[i]);
+            }
+	}
+
+
+	function checkSeed(bytes32 seed, uint256 ballotedAllocation, uint256 maxEventCapacity, uint256 usersInGroup) internal pure returns (bool) {
+		return (uint256(seed) % ballotedAllocation < maxEventCapacity * usersInGroup);
+	}
 
     function getEventById(bytes32 eventId) external view returns (EventInformation memory) {
         return _getEventById(eventId);
