@@ -17,6 +17,11 @@ contract EventRegistry {
         uint32 maxGroupSize;
     }
 
+    struct EventInformationWithHash {
+        bytes32 hash;
+        EventInformation info;
+    }
+
     struct FriendGroup {
         uint96 groupId;
         address groupOwner;
@@ -96,8 +101,8 @@ contract EventRegistry {
 
         return eventHash;
     }
-	
-	//TODO: this function should initiate the ballot
+
+    //TODO: this function should initiate the ballot
 
     function requestTicket(bytes32 eventId, address[] calldata friends) external {
         EventInformation memory eventInfo = _getEventById(eventId);
@@ -117,11 +122,11 @@ contract EventRegistry {
         }
 
         if (ticketBallotSeed[eventId] == EMPTY_BYTES32 && block.timestamp >= eventInfo.ticketSaleStart) {
-			// this is the first user in the regular sale. do the state transition
-        ticketBallotSeed[eventId] = keccak256(abi.encode(block.prevrandao));
-        // snapshot the number of tickets requested in ballot
-        ticketBallotAllocation[eventId] = ticketsRequestedCount[eventId];
-		}
+            // this is the first user in the regular sale. do the state transition
+            ticketBallotSeed[eventId] = keccak256(abi.encode(block.prevrandao));
+            // snapshot the number of tickets requested in ballot
+            ticketBallotAllocation[eventId] = ticketsRequestedCount[eventId];
+        }
 
         // If we are in ballot mode, let anyone apply for tickets.
         if (ticketBallotSeed[eventId] == EMPTY_BYTES32) {
@@ -139,7 +144,7 @@ contract EventRegistry {
             }
             // we don't need to track the group info as the tickets can already be minted
             ticketsRequestedCount[eventId] += numberOfTicketsRequested;
-			_distributeTickets(eventId, msg.sender, friends);
+            _distributeTickets(eventId, msg.sender, friends);
         }
     }
 
@@ -176,8 +181,12 @@ contract EventRegistry {
 
         // maybe you got lucky... maybe you didn't
         // this function might overflow - need to add checks
-        if (checkSeed(seed, ticketBallotAllocation[eventId], eventInfo.maxEventCapacity, groupFriends[groupId].length+1)) {
-			_distributeTickets(eventId, msg.sender, groupFriends[groupId]);
+        if (
+            checkSeed(
+                seed, ticketBallotAllocation[eventId], eventInfo.maxEventCapacity, groupFriends[groupId].length + 1
+            )
+        ) {
+            _distributeTickets(eventId, msg.sender, groupFriends[groupId]);
         }
     }
 
@@ -190,42 +199,50 @@ contract EventRegistry {
             revert TicketSaleHasntStarted();
         }
         bytes32 seed = keccak256(abi.encode(ticketBallotSeed[eventId], groupId));
-        if (checkSeed(seed, ticketBallotAllocation[eventId], eventInfo.maxEventCapacity, groupFriends[groupId].length+1)) {
+        if (
+            checkSeed(
+                seed, ticketBallotAllocation[eventId], eventInfo.maxEventCapacity, groupFriends[groupId].length + 1
+            )
+        ) {
             return groupFriends[groupId].length + 1;
         }
         return 0;
     }
 
-	function _distributeTickets(bytes32 eventId, address groupOwner, address[] memory groupMembers) internal {
-            Ticket ticketContract = getTicketContract[eventId];
-            ticketContract.mint(groupOwner);
-            emit TicketReceived(eventId, groupOwner);
-            for (uint256 i = 0; i < groupMembers.length; i++) {
-                ticketContract.mint(groupMembers[i]);
-                emit TicketReceived(eventId, groupMembers[i]);
-            }
-	}
+    function _distributeTickets(bytes32 eventId, address groupOwner, address[] memory groupMembers) internal {
+        Ticket ticketContract = getTicketContract[eventId];
+        ticketContract.mint(groupOwner);
+        emit TicketReceived(eventId, groupOwner);
+        for (uint256 i = 0; i < groupMembers.length; i++) {
+            ticketContract.mint(groupMembers[i]);
+            emit TicketReceived(eventId, groupMembers[i]);
+        }
+    }
 
-
-	function checkSeed(bytes32 seed, uint256 ballotedAllocation, uint256 maxEventCapacity, uint256 usersInGroup) internal pure returns (bool) {
-		return (uint256(seed) % ballotedAllocation < maxEventCapacity * usersInGroup);
-	}
+    function checkSeed(bytes32 seed, uint256 ballotedAllocation, uint256 maxEventCapacity, uint256 usersInGroup)
+        internal
+        pure
+        returns (bool)
+    {
+        return (uint256(seed) % ballotedAllocation < maxEventCapacity * usersInGroup);
+    }
 
     function getEventById(bytes32 eventId) external view returns (EventInformation memory) {
         return _getEventById(eventId);
     }
 
-	function getNumberOfEvents() external view returns (uint256) {
-		return allEvents.length;
-	}
+    function getNumberOfEvents() external view returns (uint256) {
+        return allEvents.length;
+    }
 
-    function listEvents(uint256 offset, uint256 limit) external view returns (EventInformation[] memory) {
+    function listEvents(uint256 offset, uint256 limit) external view returns (EventInformationWithHash[] memory) {
         if (offset + limit > allEvents.length) {
             revert OutOfBounds();
         }
-        EventInformation[] memory infos = new EventInformation[](limit);
+        EventInformationWithHash[] memory infos = new EventInformationWithHash[](limit);
         for (uint256 i = 0; i < limit; i++) {
-            infos[i] = _getEventById(allEvents[i + offset]);
+            infos[i] =
+                EventInformationWithHash({hash: allEvents[i + offset], info: _getEventById(allEvents[i + offset])});
         }
         return infos;
     }

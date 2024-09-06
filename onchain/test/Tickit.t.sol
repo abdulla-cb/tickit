@@ -17,12 +17,12 @@ contract EventRegistryTest is Test {
     }
 
     function test_list1EventNoOffset() external whenEventsRegistered(1) {
-        EventRegistry.EventInformation[] memory infos = eventRegistry.listEvents(0, 1);
+        EventRegistry.EventInformationWithHash[] memory infos = eventRegistry.listEvents(0, 1);
         assertEq(infos.length, 1);
     }
 
     function test_list2EventNoOffset() external whenEventsRegistered(2) {
-        EventRegistry.EventInformation[] memory infos = eventRegistry.listEvents(0, 2);
+        EventRegistry.EventInformationWithHash[] memory infos = eventRegistry.listEvents(0, 2);
         assertEq(infos.length, 2);
     }
 
@@ -32,7 +32,7 @@ contract EventRegistryTest is Test {
     }
 
     function test_list1EventWithOffset1() external whenEventsRegistered(2) {
-        EventRegistry.EventInformation[] memory infos = eventRegistry.listEvents(1, 1);
+        EventRegistry.EventInformationWithHash[] memory infos = eventRegistry.listEvents(1, 1);
         assertEq(infos.length, 1);
     }
 
@@ -42,7 +42,7 @@ contract EventRegistryTest is Test {
     }
 
     function test_list0Event() external whenEventsRegistered(0) {
-        EventRegistry.EventInformation[] memory infos = eventRegistry.listEvents(0, 0);
+        EventRegistry.EventInformationWithHash[] memory infos = eventRegistry.listEvents(0, 0);
         assertEq(infos.length, 0);
     }
 

@@ -8,8 +8,8 @@ import {Ticket} from "../src/Ticket.sol";
 contract TicketNFTTest is Test {
     EventRegistry public eventRegistry;
     bytes32 eventId;
-	address alice = makeAddr("alice");
-	Ticket ticket;
+    address alice = makeAddr("alice");
+    Ticket ticket;
 
     function setUp() public {
         eventRegistry = new EventRegistry();
@@ -17,18 +17,17 @@ contract TicketNFTTest is Test {
 
         address[] memory noFriends = new address[](0);
         vm.warp(block.timestamp + 4 days);
-		vm.prank(alice);
-		vm.expectEmit();
-		emit EventRegistry.TicketReceived(eventId, alice);
-		eventRegistry.requestTicket(eventId, noFriends);
+        vm.prank(alice);
+        vm.expectEmit();
+        emit EventRegistry.TicketReceived(eventId, alice);
+        eventRegistry.requestTicket(eventId, noFriends);
 
-		ticket = eventRegistry.getTicketContract(eventId);
+        ticket = eventRegistry.getTicketContract(eventId);
     }
 
-	function test_nftMetadata() public view {
-		// string memory metadata = ticket.tokenURI(1);
-	}
-
+    function test_nftMetadata() public view {
+        // string memory metadata = ticket.tokenURI(1);
+    }
 
     function _requestTicketAlone(address user) internal {
         address[] memory noFriends = new address[](0);
@@ -43,7 +42,7 @@ contract TicketNFTTest is Test {
         return eventRegistry.registerEvent(
             "My Test Event",
             "My super based event which you should all come to",
-			"Event Location",
+            "Event Location",
             uint32(block.timestamp + 3 days),
             uint32(block.timestamp + 7 days),
             uint32(block.timestamp + 14 days),

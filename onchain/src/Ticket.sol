@@ -33,8 +33,9 @@ contract Ticket is ERC721 {
         parts[7] = LibString.toHexStringChecksummed(ownerOf(tokenId));
         parts[8] = "</text></svg>";
 
-        string memory output =
-            string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]));
+        string memory output = string(
+            abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8])
+        );
         string memory json = Base64.encode(
             bytes(
                 string(
