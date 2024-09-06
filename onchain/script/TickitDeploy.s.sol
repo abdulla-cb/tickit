@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import {Script, console} from "forge-std/Script.sol";
 import {EventRegistry} from "../src/EventRegistry.sol";
 
-contract TickitScript is Script {
+contract TickitDeployScript is Script {
     EventRegistry public eventRegistry;
 
     function setUp() public {}
