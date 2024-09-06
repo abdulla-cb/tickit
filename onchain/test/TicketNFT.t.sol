@@ -4,6 +4,7 @@ pragma solidity ^0.8.13;
 import {Test, console} from "forge-std/Test.sol";
 import {EventRegistry} from "../src/EventRegistry.sol";
 import {Ticket} from "../src/Ticket.sol";
+import {IEventRegistry} from "../src/interfaces/IEventRegistry.sol";
 
 contract TicketNFTTest is Test {
     EventRegistry public eventRegistry;
@@ -19,14 +20,17 @@ contract TicketNFTTest is Test {
         vm.warp(block.timestamp + 4 days);
         vm.prank(alice);
         vm.expectEmit();
-        emit EventRegistry.TicketReceived(eventId, alice);
+        emit IEventRegistry.TicketReceived(eventId, alice);
         eventRegistry.requestTicket(eventId, noFriends);
 
-        ticket = eventRegistry.getTicketContract(eventId);
+        ticket = Ticket(address(eventRegistry.getTicketContract(eventId)));
     }
 
     function test_nftMetadata() public view {
-        // string memory metadata = ticket.tokenURI(1);
+        console.log(ticket.name());
+        console.log(ticket.symbol());
+        string memory metadata = ticket.tokenURI(1);
+        console.log(metadata);
     }
 
     function _requestTicketAlone(address user) internal {

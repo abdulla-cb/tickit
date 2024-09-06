@@ -3,6 +3,7 @@ pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
 import {EventRegistry} from "../src/EventRegistry.sol";
+import {IEventRegistry} from "../src/interfaces/IEventRegistry.sol";
 
 contract BallotTest is Test {
     EventRegistry public eventRegistry;
@@ -23,7 +24,7 @@ contract BallotTest is Test {
 
     function test_CanIssueTickets() external {
         vm.expectEmit();
-        emit EventRegistry.TicketsAllocated(eventId, 20);
+        emit IEventRegistry.TicketsAllocated(eventId, 20);
         eventRegistry.issueTickets(eventId);
     }
 

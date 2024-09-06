@@ -1,42 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
+import {IEventRegistry} from "./interfaces/IEventRegistry.sol";
+import {ITicket} from "./interfaces/ITicket.sol";
 import {Ticket} from "./Ticket.sol";
 
-contract EventRegistry {
-    // TYPE DECLARATION
-    struct EventInformation {
-        string title;
-        string description;
-        string location;
-        uint32 ticketSaleStart;
-        uint32 ticketSaleEnd;
-        uint32 eventTimestamp;
-        address eventOwner;
-        uint32 maxEventCapacity;
-        uint32 maxGroupSize;
-    }
-
-    struct EventInformationWithHash {
-        bytes32 hash;
-        EventInformation info;
-    }
-
-    struct FriendGroup {
-        uint96 groupId;
-        address groupOwner;
-    }
-
+contract EventRegistry is IEventRegistry {
     bytes32 constant EMPTY_BYTES32 = bytes32(0);
 
-    // STATE VARIABLES
     mapping(bytes32 eventId => EventInformation eventInformation) private eventInformationById;
     bytes32[] private allEvents;
     uint96 private nextFriendGroup = 0;
 
     mapping(bytes32 eventId => bytes32 seed) private ticketBallotSeed;
     mapping(bytes32 eventId => uint256 ticketCount) private ticketsRequestedCount;
-    mapping(bytes32 eventId => Ticket ticketContract) public getTicketContract;
+    mapping(bytes32 eventId => ITicket ticketContract) private ticketContracts;
     mapping(bytes32 eventId => bytes32[] friendGroups) private ticketsRequested;
 
     mapping(bytes32 eventId => uint256 ticketCount) private ticketBallotAllocation;
@@ -44,27 +22,8 @@ contract EventRegistry {
 
     mapping(uint96 groupId => address[] friends) private groupFriends;
 
-    // ERRORS
-    error EventAlreadyRegistered();
-    error EventNotFound();
-    error OutOfBounds();
-    error TicketsAlreadyAllocated();
-    error TicketSaleHasntStarted();
-    error TicketSaleFinished();
-    error TooManyFriends();
-    error EventOversubscribed();
-    error AlreadyHasGroup();
-    error DidNotApplyForTickets();
-
-    // EVENTS
-    event EventRegistered(bytes32 indexed eventId, uint32 indexed eventTimestamp);
-    event BallotEntered(bytes32 indexed eventId, address indexed groupOwner, address[] groupMembers);
-    event TicketReceived(bytes32 indexed eventId, address receiver);
-    event TicketsAllocated(bytes32 indexed eventId, uint256 ballotSize);
-
-    // MODIFIERS
-
     // FUNCTIONS
+
     function registerEvent(
         string calldata title,
         string calldata description,
@@ -96,8 +55,7 @@ contract EventRegistry {
         allEvents.push(eventHash);
         emit EventRegistered(eventHash, eventTimestamp);
 
-        getTicketContract[eventHash] =
-            new Ticket{salt: eventHash}(title, string.concat("TICKIT-", _getShortHash(eventHash)), eventHash);
+        ticketContracts[eventHash] = ITicket(address(new Ticket{salt: eventHash}(title, eventHash)));
 
         return eventHash;
     }
@@ -130,7 +88,7 @@ contract EventRegistry {
 
         // If we are in ballot mode, let anyone apply for tickets.
         if (ticketBallotSeed[eventId] == EMPTY_BYTES32) {
-            FriendGroup memory group = FriendGroup({groupId: ++nextFriendGroup, groupOwner: msg.sender});
+            IEventRegistry.FriendGroup memory group = FriendGroup({groupId: ++nextFriendGroup, groupOwner: msg.sender});
 
             groupFriends[group.groupId] = friends;
             ticketsRequested[eventId].push(_toBytes32(group));
@@ -209,8 +167,12 @@ contract EventRegistry {
         return 0;
     }
 
+    function getTicketContract(bytes32 eventId) external view returns (ITicket tickeContract) {
+        return ITicket(address(ticketContracts[eventId]));
+    }
+
     function _distributeTickets(bytes32 eventId, address groupOwner, address[] memory groupMembers) internal {
-        Ticket ticketContract = getTicketContract[eventId];
+        ITicket ticketContract = ticketContracts[eventId];
         ticketContract.mint(groupOwner);
         emit TicketReceived(eventId, groupOwner);
         for (uint256 i = 0; i < groupMembers.length; i++) {
@@ -254,16 +216,12 @@ contract EventRegistry {
         revert EventNotFound();
     }
 
-    function _getEventHash(EventInformation memory eventInfo) internal pure returns (bytes32) {
+    function _getEventHash(IEventRegistry.EventInformation memory eventInfo) internal pure returns (bytes32) {
         return
             keccak256(abi.encode(eventInfo.title, eventInfo.description, eventInfo.location, eventInfo.eventTimestamp));
     }
 
     function _toBytes32(FriendGroup memory group) internal pure returns (bytes32) {
         return bytes32(abi.encode(group));
-    }
-
-    function _getShortHash(bytes32 eventId) internal pure returns (string memory) {
-        return string(abi.encodePacked(bytes4(eventId)));
     }
 }

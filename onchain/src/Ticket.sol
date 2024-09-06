@@ -2,24 +2,28 @@
 pragma solidity ^0.8.26;
 
 import {ERC721} from "solmate/tokens/ERC721.sol";
-import {EventRegistry} from "./EventRegistry.sol";
+import {IEventRegistry} from "./interfaces/IEventRegistry.sol";
 import {Base64} from "solady/utils/Base64.sol";
 import {LibString} from "solady/utils/Libstring.sol";
 
 contract Ticket is ERC721 {
-    address immutable eventRegistry;
+    using LibString for string;
+
+    IEventRegistry immutable eventRegistry;
     bytes32 immutable eventId;
     uint256 nextTokenId = 0;
 
     error OnlyEventRegistry();
 
-    constructor(string memory _name, string memory _symbol, bytes32 _eventId) ERC721(_name, _symbol) {
-        eventRegistry = msg.sender;
+    constructor(string memory _name, bytes32 _eventId)
+        ERC721(_name, LibString.concat("TICKIT-",LibString.toHexStringNoPrefix(uint256(_eventId)).slice(0, 8)))
+    {
+        eventRegistry = IEventRegistry(msg.sender);
         eventId = _eventId;
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
-        EventRegistry.EventInformation memory eventInfo = EventRegistry(eventRegistry).getEventById(eventId);
+        IEventRegistry.EventInformation memory eventInfo = eventRegistry.getEventById(eventId);
 
         string[9] memory parts;
         parts[0] =
@@ -42,7 +46,9 @@ contract Ticket is ERC721 {
                     abi.encodePacked(
                         '{"name": "Ticket #',
                         LibString.toString(tokenId),
-                        '", "description": "This is a based ticket from Tickit.", "image": "data:image/svg+xml;base64,',
+                        '", "description": "',
+						eventInfo.description,
+						'", "image": "data:image/svg+xml;base64,',
                         Base64.encode(bytes(output)),
                         '"}'
                     )
@@ -59,7 +65,7 @@ contract Ticket is ERC721 {
     }
 
     modifier onlyEventRegistry() {
-        if (msg.sender != eventRegistry) {
+        if (msg.sender != address(eventRegistry)) {
             revert OnlyEventRegistry();
         }
         _;

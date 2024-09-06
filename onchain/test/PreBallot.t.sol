@@ -3,6 +3,7 @@ pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
 import {EventRegistry} from "../src/EventRegistry.sol";
+import {IEventRegistry} from "../src/interfaces/IEventRegistry.sol";
 
 contract PreBallotTest is Test {
     EventRegistry public eventRegistry;
@@ -22,7 +23,7 @@ contract PreBallotTest is Test {
         address[] memory noFriends = new address[](0);
         vm.prank(alice);
         vm.expectEmit();
-        emit EventRegistry.BallotEntered(eventId, alice, noFriends);
+        emit IEventRegistry.BallotEntered(eventId, alice, noFriends);
         eventRegistry.requestTicket(eventId, noFriends);
     }
 
@@ -33,7 +34,7 @@ contract PreBallotTest is Test {
         friends[2] = charlie;
         vm.prank(alice);
         vm.expectEmit();
-        emit EventRegistry.BallotEntered(eventId, alice, friends);
+        emit IEventRegistry.BallotEntered(eventId, alice, friends);
         eventRegistry.requestTicket(eventId, friends);
     }
 
@@ -44,7 +45,7 @@ contract PreBallotTest is Test {
         friends[2] = charlie;
         friends[3] = dude;
         vm.prank(alice);
-        vm.expectRevert(EventRegistry.TooManyFriends.selector);
+        vm.expectRevert(IEventRegistry.TooManyFriends.selector);
         eventRegistry.requestTicket(eventId, friends);
     }
 
@@ -53,22 +54,22 @@ contract PreBallotTest is Test {
         vm.startPrank(alice);
 
         vm.expectEmit();
-        emit EventRegistry.BallotEntered(eventId, alice, noFriends);
+        emit IEventRegistry.BallotEntered(eventId, alice, noFriends);
         eventRegistry.requestTicket(eventId, noFriends);
 
-        vm.expectRevert(EventRegistry.AlreadyHasGroup.selector);
+        vm.expectRevert(IEventRegistry.AlreadyHasGroup.selector);
         eventRegistry.requestTicket(eventId, noFriends);
 
         vm.stopPrank();
     }
 
     function test_RevertIssueTicketsBeforeSaleStarted() external {
-        vm.expectRevert(EventRegistry.TicketSaleHasntStarted.selector);
+        vm.expectRevert(IEventRegistry.TicketSaleHasntStarted.selector);
         eventRegistry.issueTickets(eventId);
     }
 
     function test_RevertClaimTicketsBeforeSaleStarted() external {
-        vm.expectRevert(EventRegistry.TicketSaleHasntStarted.selector);
+        vm.expectRevert(IEventRegistry.TicketSaleHasntStarted.selector);
         eventRegistry.issueTickets(eventId);
     }
 

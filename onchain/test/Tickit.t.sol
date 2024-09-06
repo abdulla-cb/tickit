@@ -3,6 +3,7 @@ pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
 import {EventRegistry} from "../src/EventRegistry.sol";
+import {IEventRegistry} from "../src/interfaces/IEventRegistry.sol";
 
 contract EventRegistryTest is Test {
     EventRegistry public eventRegistry;
@@ -17,7 +18,7 @@ contract EventRegistryTest is Test {
     }
 
     function test_list1EventNoOffset() external whenEventsRegistered(1) {
-        EventRegistry.EventInformationWithHash[] memory infos = eventRegistry.listEvents(0, 1);
+        IEventRegistry.EventInformationWithHash[] memory infos = eventRegistry.listEvents(0, 1);
         assertEq(infos.length, 1);
     }
 
@@ -27,7 +28,7 @@ contract EventRegistryTest is Test {
     }
 
     function test_list2EventNoOffsetWithOverflow() external whenEventsRegistered(1) {
-        vm.expectRevert(EventRegistry.OutOfBounds.selector);
+        vm.expectRevert(IEventRegistry.OutOfBounds.selector);
         eventRegistry.listEvents(0, 2);
     }
 
@@ -37,7 +38,7 @@ contract EventRegistryTest is Test {
     }
 
     function test_list2EventWithOffset1ShouldRevert() external whenEventsRegistered(2) {
-        vm.expectRevert(EventRegistry.OutOfBounds.selector);
+        vm.expectRevert(IEventRegistry.OutOfBounds.selector);
         eventRegistry.listEvents(1, 2);
     }
 
