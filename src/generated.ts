@@ -2869,6 +2869,718 @@ export const iVersionableResolverAbi = [
 ] as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// L2Resolver
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const l2ResolverAbi = [
+  {
+    type: 'constructor',
+    inputs: [
+      { name: 'ens_', internalType: 'contract ENS', type: 'address' },
+      {
+        name: 'registrarController_',
+        internalType: 'address',
+        type: 'address',
+      },
+      { name: 'reverseRegistrar_', internalType: 'address', type: 'address' },
+      { name: 'owner_', internalType: 'address', type: 'address' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'contentTypes', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ABI',
+    outputs: [
+      { name: '', internalType: 'uint256', type: 'uint256' },
+      { name: '', internalType: 'bytes', type: 'bytes' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'node', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'addr',
+    outputs: [{ name: '', internalType: 'address payable', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'coinType', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'addr',
+    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'delegate', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'approve',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'cancelOwnershipHandover',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'node', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'clearRecords',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'pendingOwner', internalType: 'address', type: 'address' },
+    ],
+    name: 'completeOwnershipHandover',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'node', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'contenthash',
+    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'name', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'resource', internalType: 'uint16', type: 'uint16' },
+    ],
+    name: 'dnsRecord',
+    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'ens',
+    outputs: [{ name: '', internalType: 'contract ENS', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'name', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'hasDNSRecords',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'interfaceID', internalType: 'bytes4', type: 'bytes4' },
+    ],
+    name: 'interfaceImplementer',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'delegate', internalType: 'address', type: 'address' },
+    ],
+    name: 'isApprovedFor',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'operator', internalType: 'address', type: 'address' },
+    ],
+    name: 'isApprovedForAll',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'data', internalType: 'bytes[]', type: 'bytes[]' }],
+    name: 'multicall',
+    outputs: [{ name: 'results', internalType: 'bytes[]', type: 'bytes[]' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'nodehash', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'data', internalType: 'bytes[]', type: 'bytes[]' },
+    ],
+    name: 'multicallWithNodeCheck',
+    outputs: [{ name: 'results', internalType: 'bytes[]', type: 'bytes[]' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'node', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: 'result', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'pendingOwner', internalType: 'address', type: 'address' },
+    ],
+    name: 'ownershipHandoverExpiresAt',
+    outputs: [{ name: 'result', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'node', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'pubkey',
+    outputs: [
+      { name: 'x', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'y', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'recordVersions',
+    outputs: [{ name: '', internalType: 'uint64', type: 'uint64' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'registrarController',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'requestOwnershipHandover',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'bytes', type: 'bytes' },
+      { name: 'data', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'resolve',
+    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'reverseRegistrar',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'contentType', internalType: 'uint256', type: 'uint256' },
+      { name: 'data', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'setABI',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'coinType', internalType: 'uint256', type: 'uint256' },
+      { name: 'a', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'setAddr',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'a', internalType: 'address', type: 'address' },
+    ],
+    name: 'setAddr',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'operator', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setApprovalForAll',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'hash', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'setContenthash',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'data', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'setDNSRecords',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'interfaceID', internalType: 'bytes4', type: 'bytes4' },
+      { name: 'implementer', internalType: 'address', type: 'address' },
+    ],
+    name: 'setInterface',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'newName', internalType: 'string', type: 'string' },
+    ],
+    name: 'setName',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'x', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'y', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'setPubkey',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: 'registrarController_',
+        internalType: 'address',
+        type: 'address',
+      },
+    ],
+    name: 'setRegistrarController',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'reverseRegistrar_', internalType: 'address', type: 'address' },
+    ],
+    name: 'setReverseRegistrar',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'key', internalType: 'string', type: 'string' },
+      { name: 'value', internalType: 'string', type: 'string' },
+    ],
+    name: 'setText',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'hash', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'setZonehash',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceID', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'key', internalType: 'string', type: 'string' },
+    ],
+    name: 'text',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'node', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'zonehash',
+    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'contentType',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: true,
+      },
+    ],
+    name: 'ABIChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      { name: 'a', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'AddrChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'coinType',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'newAddress',
+        internalType: 'bytes',
+        type: 'bytes',
+        indexed: false,
+      },
+    ],
+    name: 'AddressChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'operator',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'ApprovalForAll',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'delegate',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: true },
+    ],
+    name: 'Approved',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      { name: 'hash', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'ContenthashChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      { name: 'name', internalType: 'bytes', type: 'bytes', indexed: false },
+      {
+        name: 'resource',
+        internalType: 'uint16',
+        type: 'uint16',
+        indexed: false,
+      },
+      { name: 'record', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'DNSRecordChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      { name: 'name', internalType: 'bytes', type: 'bytes', indexed: false },
+      {
+        name: 'resource',
+        internalType: 'uint16',
+        type: 'uint16',
+        indexed: false,
+      },
+    ],
+    name: 'DNSRecordDeleted',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'lastzonehash',
+        internalType: 'bytes',
+        type: 'bytes',
+        indexed: false,
+      },
+      {
+        name: 'zonehash',
+        internalType: 'bytes',
+        type: 'bytes',
+        indexed: false,
+      },
+    ],
+    name: 'DNSZonehashChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'interfaceID',
+        internalType: 'bytes4',
+        type: 'bytes4',
+        indexed: true,
+      },
+      {
+        name: 'implementer',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'InterfaceChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      { name: 'name', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'NameChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'pendingOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipHandoverCanceled',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'pendingOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipHandoverRequested',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'oldOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      { name: 'x', internalType: 'bytes32', type: 'bytes32', indexed: false },
+      { name: 'y', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'PubkeyChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'newRegistrarController',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RegistrarControllerUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'newReverseRegistrar',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'ReverseRegistrarUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'indexedKey',
+        internalType: 'string',
+        type: 'string',
+        indexed: true,
+      },
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'value', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'TextChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'newVersion',
+        internalType: 'uint64',
+        type: 'uint64',
+        indexed: false,
+      },
+    ],
+    name: 'VersionChanged',
+  },
+  { type: 'error', inputs: [], name: 'AlreadyInitialized' },
+  { type: 'error', inputs: [], name: 'CantSetSelfAsDelegate' },
+  { type: 'error', inputs: [], name: 'CantSetSelfAsOperator' },
+  { type: 'error', inputs: [], name: 'NewOwnerIsZeroAddress' },
+  { type: 'error', inputs: [], name: 'NoHandoverRequest' },
+  { type: 'error', inputs: [], name: 'Unauthorized' },
+] as const;
+
+export const l2ResolverAddress =
+  '0x6533C94869D28fAA8dF77cc63f9e2b2D6Cf77eBA' as const;
+
+export const l2ResolverConfig = {
+  address: l2ResolverAddress,
+  abi: l2ResolverAbi,
+} as const;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MockERC20
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3607,6 +4319,278 @@ export const resolverBaseAbi = [
     name: 'VersionChanged',
   },
 ] as const;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ReverseRegistrar
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const reverseRegistrarAbi = [
+  {
+    type: 'constructor',
+    inputs: [
+      { name: 'registry_', internalType: 'contract ENS', type: 'address' },
+      { name: 'owner_', internalType: 'address', type: 'address' },
+      { name: 'reverseNode_', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'cancelOwnershipHandover',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'claim',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'addr', internalType: 'address', type: 'address' },
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'resolver', internalType: 'address', type: 'address' },
+    ],
+    name: 'claimForBaseAddr',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'resolver', internalType: 'address', type: 'address' },
+    ],
+    name: 'claimWithResolver',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'pendingOwner', internalType: 'address', type: 'address' },
+    ],
+    name: 'completeOwnershipHandover',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'controller', internalType: 'address', type: 'address' }],
+    name: 'controllers',
+    outputs: [{ name: 'approved', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'defaultResolver',
+    outputs: [
+      { name: '', internalType: 'contract NameResolver', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'addr', internalType: 'address', type: 'address' }],
+    name: 'node',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: 'result', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'pendingOwner', internalType: 'address', type: 'address' },
+    ],
+    name: 'ownershipHandoverExpiresAt',
+    outputs: [{ name: 'result', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'registry',
+    outputs: [{ name: '', internalType: 'contract ENS', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'requestOwnershipHandover',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'reverseNode',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'controller', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setControllerApproval',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'resolver', internalType: 'address', type: 'address' }],
+    name: 'setDefaultResolver',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'name', internalType: 'string', type: 'string' }],
+    name: 'setName',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'addr', internalType: 'address', type: 'address' },
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'resolver', internalType: 'address', type: 'address' },
+      { name: 'name', internalType: 'string', type: 'string' },
+    ],
+    name: 'setNameForAddr',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'addr', internalType: 'address', type: 'address', indexed: true },
+      { name: 'node', internalType: 'bytes32', type: 'bytes32', indexed: true },
+    ],
+    name: 'BaseReverseClaimed',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'controller',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'ControllerApprovalChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'resolver',
+        internalType: 'contract NameResolver',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'DefaultResolverChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'pendingOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipHandoverCanceled',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'pendingOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipHandoverRequested',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'oldOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  { type: 'error', inputs: [], name: 'AlreadyInitialized' },
+  { type: 'error', inputs: [], name: 'NewOwnerIsZeroAddress' },
+  { type: 'error', inputs: [], name: 'NoHandoverRequest' },
+  { type: 'error', inputs: [], name: 'NoZeroAddress' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'addr', internalType: 'address', type: 'address' },
+      { name: 'sender', internalType: 'address', type: 'address' },
+    ],
+    name: 'NotAuthorized',
+  },
+  { type: 'error', inputs: [], name: 'Unauthorized' },
+] as const;
+
+export const reverseRegistrarAddress =
+  '0xa0A8401ECF248a9375a0a71C4dedc263dA18dCd7' as const;
+
+export const reverseRegistrarConfig = {
+  address: reverseRegistrarAddress,
+  abi: reverseRegistrarAbi,
+} as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Script
@@ -14972,6 +15956,829 @@ export const useWatchIVersionableResolverVersionChangedEvent =
   });
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__
+ */
+export const useReadL2Resolver = /*#__PURE__*/ createUseReadContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"ABI"`
+ */
+export const useReadL2ResolverAbi = /*#__PURE__*/ createUseReadContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'ABI',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"addr"`
+ */
+export const useReadL2ResolverAddr = /*#__PURE__*/ createUseReadContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'addr',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"contenthash"`
+ */
+export const useReadL2ResolverContenthash = /*#__PURE__*/ createUseReadContract(
+  {
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'contenthash',
+  },
+);
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"dnsRecord"`
+ */
+export const useReadL2ResolverDnsRecord = /*#__PURE__*/ createUseReadContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'dnsRecord',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"ens"`
+ */
+export const useReadL2ResolverEns = /*#__PURE__*/ createUseReadContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'ens',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"hasDNSRecords"`
+ */
+export const useReadL2ResolverHasDnsRecords =
+  /*#__PURE__*/ createUseReadContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'hasDNSRecords',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"interfaceImplementer"`
+ */
+export const useReadL2ResolverInterfaceImplementer =
+  /*#__PURE__*/ createUseReadContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'interfaceImplementer',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"isApprovedFor"`
+ */
+export const useReadL2ResolverIsApprovedFor =
+  /*#__PURE__*/ createUseReadContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'isApprovedFor',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"isApprovedForAll"`
+ */
+export const useReadL2ResolverIsApprovedForAll =
+  /*#__PURE__*/ createUseReadContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'isApprovedForAll',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"name"`
+ */
+export const useReadL2ResolverName = /*#__PURE__*/ createUseReadContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'name',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"owner"`
+ */
+export const useReadL2ResolverOwner = /*#__PURE__*/ createUseReadContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'owner',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"ownershipHandoverExpiresAt"`
+ */
+export const useReadL2ResolverOwnershipHandoverExpiresAt =
+  /*#__PURE__*/ createUseReadContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'ownershipHandoverExpiresAt',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"pubkey"`
+ */
+export const useReadL2ResolverPubkey = /*#__PURE__*/ createUseReadContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'pubkey',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"recordVersions"`
+ */
+export const useReadL2ResolverRecordVersions =
+  /*#__PURE__*/ createUseReadContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'recordVersions',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"registrarController"`
+ */
+export const useReadL2ResolverRegistrarController =
+  /*#__PURE__*/ createUseReadContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'registrarController',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"resolve"`
+ */
+export const useReadL2ResolverResolve = /*#__PURE__*/ createUseReadContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'resolve',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"reverseRegistrar"`
+ */
+export const useReadL2ResolverReverseRegistrar =
+  /*#__PURE__*/ createUseReadContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'reverseRegistrar',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadL2ResolverSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'supportsInterface',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"text"`
+ */
+export const useReadL2ResolverText = /*#__PURE__*/ createUseReadContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'text',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"zonehash"`
+ */
+export const useReadL2ResolverZonehash = /*#__PURE__*/ createUseReadContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'zonehash',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__
+ */
+export const useWriteL2Resolver = /*#__PURE__*/ createUseWriteContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteL2ResolverApprove = /*#__PURE__*/ createUseWriteContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'approve',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"cancelOwnershipHandover"`
+ */
+export const useWriteL2ResolverCancelOwnershipHandover =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'cancelOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"clearRecords"`
+ */
+export const useWriteL2ResolverClearRecords =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'clearRecords',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"completeOwnershipHandover"`
+ */
+export const useWriteL2ResolverCompleteOwnershipHandover =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'completeOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"multicall"`
+ */
+export const useWriteL2ResolverMulticall = /*#__PURE__*/ createUseWriteContract(
+  { abi: l2ResolverAbi, address: l2ResolverAddress, functionName: 'multicall' },
+);
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"multicallWithNodeCheck"`
+ */
+export const useWriteL2ResolverMulticallWithNodeCheck =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'multicallWithNodeCheck',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useWriteL2ResolverRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'renounceOwnership',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"requestOwnershipHandover"`
+ */
+export const useWriteL2ResolverRequestOwnershipHandover =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'requestOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setABI"`
+ */
+export const useWriteL2ResolverSetAbi = /*#__PURE__*/ createUseWriteContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'setABI',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setAddr"`
+ */
+export const useWriteL2ResolverSetAddr = /*#__PURE__*/ createUseWriteContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'setAddr',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setApprovalForAll"`
+ */
+export const useWriteL2ResolverSetApprovalForAll =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setApprovalForAll',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setContenthash"`
+ */
+export const useWriteL2ResolverSetContenthash =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setContenthash',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setDNSRecords"`
+ */
+export const useWriteL2ResolverSetDnsRecords =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setDNSRecords',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setInterface"`
+ */
+export const useWriteL2ResolverSetInterface =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setInterface',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setName"`
+ */
+export const useWriteL2ResolverSetName = /*#__PURE__*/ createUseWriteContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'setName',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setPubkey"`
+ */
+export const useWriteL2ResolverSetPubkey = /*#__PURE__*/ createUseWriteContract(
+  { abi: l2ResolverAbi, address: l2ResolverAddress, functionName: 'setPubkey' },
+);
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setRegistrarController"`
+ */
+export const useWriteL2ResolverSetRegistrarController =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setRegistrarController',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setReverseRegistrar"`
+ */
+export const useWriteL2ResolverSetReverseRegistrar =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setReverseRegistrar',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setText"`
+ */
+export const useWriteL2ResolverSetText = /*#__PURE__*/ createUseWriteContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+  functionName: 'setText',
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setZonehash"`
+ */
+export const useWriteL2ResolverSetZonehash =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setZonehash',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useWriteL2ResolverTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'transferOwnership',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__
+ */
+export const useSimulateL2Resolver = /*#__PURE__*/ createUseSimulateContract({
+  abi: l2ResolverAbi,
+  address: l2ResolverAddress,
+});
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateL2ResolverApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'approve',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"cancelOwnershipHandover"`
+ */
+export const useSimulateL2ResolverCancelOwnershipHandover =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'cancelOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"clearRecords"`
+ */
+export const useSimulateL2ResolverClearRecords =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'clearRecords',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"completeOwnershipHandover"`
+ */
+export const useSimulateL2ResolverCompleteOwnershipHandover =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'completeOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"multicall"`
+ */
+export const useSimulateL2ResolverMulticall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'multicall',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"multicallWithNodeCheck"`
+ */
+export const useSimulateL2ResolverMulticallWithNodeCheck =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'multicallWithNodeCheck',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useSimulateL2ResolverRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'renounceOwnership',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"requestOwnershipHandover"`
+ */
+export const useSimulateL2ResolverRequestOwnershipHandover =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'requestOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setABI"`
+ */
+export const useSimulateL2ResolverSetAbi =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setABI',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setAddr"`
+ */
+export const useSimulateL2ResolverSetAddr =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setAddr',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setApprovalForAll"`
+ */
+export const useSimulateL2ResolverSetApprovalForAll =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setApprovalForAll',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setContenthash"`
+ */
+export const useSimulateL2ResolverSetContenthash =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setContenthash',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setDNSRecords"`
+ */
+export const useSimulateL2ResolverSetDnsRecords =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setDNSRecords',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setInterface"`
+ */
+export const useSimulateL2ResolverSetInterface =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setInterface',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setName"`
+ */
+export const useSimulateL2ResolverSetName =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setName',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setPubkey"`
+ */
+export const useSimulateL2ResolverSetPubkey =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setPubkey',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setRegistrarController"`
+ */
+export const useSimulateL2ResolverSetRegistrarController =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setRegistrarController',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setReverseRegistrar"`
+ */
+export const useSimulateL2ResolverSetReverseRegistrar =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setReverseRegistrar',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setText"`
+ */
+export const useSimulateL2ResolverSetText =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setText',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"setZonehash"`
+ */
+export const useSimulateL2ResolverSetZonehash =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'setZonehash',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link l2ResolverAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useSimulateL2ResolverTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    functionName: 'transferOwnership',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__
+ */
+export const useWatchL2ResolverEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"ABIChanged"`
+ */
+export const useWatchL2ResolverAbiChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'ABIChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"AddrChanged"`
+ */
+export const useWatchL2ResolverAddrChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'AddrChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"AddressChanged"`
+ */
+export const useWatchL2ResolverAddressChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'AddressChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"ApprovalForAll"`
+ */
+export const useWatchL2ResolverApprovalForAllEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'ApprovalForAll',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"Approved"`
+ */
+export const useWatchL2ResolverApprovedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'Approved',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"ContenthashChanged"`
+ */
+export const useWatchL2ResolverContenthashChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'ContenthashChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"DNSRecordChanged"`
+ */
+export const useWatchL2ResolverDnsRecordChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'DNSRecordChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"DNSRecordDeleted"`
+ */
+export const useWatchL2ResolverDnsRecordDeletedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'DNSRecordDeleted',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"DNSZonehashChanged"`
+ */
+export const useWatchL2ResolverDnsZonehashChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'DNSZonehashChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"InterfaceChanged"`
+ */
+export const useWatchL2ResolverInterfaceChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'InterfaceChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"NameChanged"`
+ */
+export const useWatchL2ResolverNameChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'NameChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"OwnershipHandoverCanceled"`
+ */
+export const useWatchL2ResolverOwnershipHandoverCanceledEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'OwnershipHandoverCanceled',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"OwnershipHandoverRequested"`
+ */
+export const useWatchL2ResolverOwnershipHandoverRequestedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'OwnershipHandoverRequested',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const useWatchL2ResolverOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'OwnershipTransferred',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"PubkeyChanged"`
+ */
+export const useWatchL2ResolverPubkeyChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'PubkeyChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"RegistrarControllerUpdated"`
+ */
+export const useWatchL2ResolverRegistrarControllerUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'RegistrarControllerUpdated',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"ReverseRegistrarUpdated"`
+ */
+export const useWatchL2ResolverReverseRegistrarUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'ReverseRegistrarUpdated',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"TextChanged"`
+ */
+export const useWatchL2ResolverTextChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'TextChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link l2ResolverAbi}__ and `eventName` set to `"VersionChanged"`
+ */
+export const useWatchL2ResolverVersionChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: l2ResolverAbi,
+    address: l2ResolverAddress,
+    eventName: 'VersionChanged',
+  });
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockErc20Abi}__
  */
 export const useReadMockErc20 = /*#__PURE__*/ createUseReadContract({
@@ -15891,6 +17698,410 @@ export const useWatchResolverBaseVersionChangedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: resolverBaseAbi,
     eventName: 'VersionChanged',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link reverseRegistrarAbi}__
+ */
+export const useReadReverseRegistrar = /*#__PURE__*/ createUseReadContract({
+  abi: reverseRegistrarAbi,
+  address: reverseRegistrarAddress,
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"controllers"`
+ */
+export const useReadReverseRegistrarControllers =
+  /*#__PURE__*/ createUseReadContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'controllers',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"defaultResolver"`
+ */
+export const useReadReverseRegistrarDefaultResolver =
+  /*#__PURE__*/ createUseReadContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'defaultResolver',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"node"`
+ */
+export const useReadReverseRegistrarNode = /*#__PURE__*/ createUseReadContract({
+  abi: reverseRegistrarAbi,
+  address: reverseRegistrarAddress,
+  functionName: 'node',
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"owner"`
+ */
+export const useReadReverseRegistrarOwner = /*#__PURE__*/ createUseReadContract(
+  {
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'owner',
+  },
+);
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"ownershipHandoverExpiresAt"`
+ */
+export const useReadReverseRegistrarOwnershipHandoverExpiresAt =
+  /*#__PURE__*/ createUseReadContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'ownershipHandoverExpiresAt',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"registry"`
+ */
+export const useReadReverseRegistrarRegistry =
+  /*#__PURE__*/ createUseReadContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'registry',
+  });
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"reverseNode"`
+ */
+export const useReadReverseRegistrarReverseNode =
+  /*#__PURE__*/ createUseReadContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'reverseNode',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__
+ */
+export const useWriteReverseRegistrar = /*#__PURE__*/ createUseWriteContract({
+  abi: reverseRegistrarAbi,
+  address: reverseRegistrarAddress,
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"cancelOwnershipHandover"`
+ */
+export const useWriteReverseRegistrarCancelOwnershipHandover =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'cancelOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"claim"`
+ */
+export const useWriteReverseRegistrarClaim =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'claim',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"claimForBaseAddr"`
+ */
+export const useWriteReverseRegistrarClaimForBaseAddr =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'claimForBaseAddr',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"claimWithResolver"`
+ */
+export const useWriteReverseRegistrarClaimWithResolver =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'claimWithResolver',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"completeOwnershipHandover"`
+ */
+export const useWriteReverseRegistrarCompleteOwnershipHandover =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'completeOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useWriteReverseRegistrarRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'renounceOwnership',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"requestOwnershipHandover"`
+ */
+export const useWriteReverseRegistrarRequestOwnershipHandover =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'requestOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"setControllerApproval"`
+ */
+export const useWriteReverseRegistrarSetControllerApproval =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'setControllerApproval',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"setDefaultResolver"`
+ */
+export const useWriteReverseRegistrarSetDefaultResolver =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'setDefaultResolver',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"setName"`
+ */
+export const useWriteReverseRegistrarSetName =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'setName',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"setNameForAddr"`
+ */
+export const useWriteReverseRegistrarSetNameForAddr =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'setNameForAddr',
+  });
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useWriteReverseRegistrarTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'transferOwnership',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__
+ */
+export const useSimulateReverseRegistrar =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"cancelOwnershipHandover"`
+ */
+export const useSimulateReverseRegistrarCancelOwnershipHandover =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'cancelOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"claim"`
+ */
+export const useSimulateReverseRegistrarClaim =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'claim',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"claimForBaseAddr"`
+ */
+export const useSimulateReverseRegistrarClaimForBaseAddr =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'claimForBaseAddr',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"claimWithResolver"`
+ */
+export const useSimulateReverseRegistrarClaimWithResolver =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'claimWithResolver',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"completeOwnershipHandover"`
+ */
+export const useSimulateReverseRegistrarCompleteOwnershipHandover =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'completeOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useSimulateReverseRegistrarRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'renounceOwnership',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"requestOwnershipHandover"`
+ */
+export const useSimulateReverseRegistrarRequestOwnershipHandover =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'requestOwnershipHandover',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"setControllerApproval"`
+ */
+export const useSimulateReverseRegistrarSetControllerApproval =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'setControllerApproval',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"setDefaultResolver"`
+ */
+export const useSimulateReverseRegistrarSetDefaultResolver =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'setDefaultResolver',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"setName"`
+ */
+export const useSimulateReverseRegistrarSetName =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'setName',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"setNameForAddr"`
+ */
+export const useSimulateReverseRegistrarSetNameForAddr =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'setNameForAddr',
+  });
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useSimulateReverseRegistrarTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    functionName: 'transferOwnership',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link reverseRegistrarAbi}__
+ */
+export const useWatchReverseRegistrarEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `eventName` set to `"BaseReverseClaimed"`
+ */
+export const useWatchReverseRegistrarBaseReverseClaimedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    eventName: 'BaseReverseClaimed',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `eventName` set to `"ControllerApprovalChanged"`
+ */
+export const useWatchReverseRegistrarControllerApprovalChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    eventName: 'ControllerApprovalChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `eventName` set to `"DefaultResolverChanged"`
+ */
+export const useWatchReverseRegistrarDefaultResolverChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    eventName: 'DefaultResolverChanged',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `eventName` set to `"OwnershipHandoverCanceled"`
+ */
+export const useWatchReverseRegistrarOwnershipHandoverCanceledEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    eventName: 'OwnershipHandoverCanceled',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `eventName` set to `"OwnershipHandoverRequested"`
+ */
+export const useWatchReverseRegistrarOwnershipHandoverRequestedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    eventName: 'OwnershipHandoverRequested',
+  });
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link reverseRegistrarAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const useWatchReverseRegistrarOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: reverseRegistrarAbi,
+    address: reverseRegistrarAddress,
+    eventName: 'OwnershipTransferred',
   });
 
 /**
