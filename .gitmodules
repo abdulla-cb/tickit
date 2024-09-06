@@ -4,3 +4,6 @@
 [submodule "onchain/lib/basefriends"]
 	path = onchain/lib/basefriends
 	url = https://github.com/stevieraykatz/basefriends
+[submodule "onchain/lib/solmate"]
+	path = onchain/lib/solmate
+	url = https://github.com/transmissions11/solmate
