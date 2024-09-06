@@ -1,7 +1,7 @@
 import { defineConfig } from '@wagmi/cli';
 import { foundry, react } from '@wagmi/cli/plugins';
-import reverseRegistrar from './onchain//lib/basefriends/lib/basenames/out/ReverseRegistrar.sol/ReverseRegistrar.0.8.26.json';
-import l2Resolver from './onchain//lib/basefriends/lib/basenames/out/L2Resolver.sol/L2Resolver.0.8.26.json';
+import reverseRegistrar from './onchain/lib/basefriends/lib/basenames/out/ReverseRegistrar.sol/ReverseRegistrar.0.8.26.json';
+import l2Resolver from './onchain/lib/basefriends/lib/basenames/out/L2Resolver.sol/L2Resolver.0.8.26.json';
 
 export default defineConfig({
   out: 'src/generated.ts',
@@ -21,7 +21,7 @@ export default defineConfig({
     foundry({
       project: './onchain',
       deployments: {
-        EventRegistry: '0x0B14cD58D7a18B1f22e634D76Ba4E55f25e1723A',
+        EventRegistry: '0x64d10B0C2202C26338071741663aA955012c8A44',
       },
     }),
     foundry({
