@@ -27,7 +27,7 @@ contract EventRegistry {
     // STATE VARIABLES
     mapping(bytes32 eventId => EventInformation eventInformation) private eventInformationById;
     bytes32[] private allEvents;
-	uint96 private nextFriendGroup=1;
+	uint96 private nextFriendGroup=0;
 
 	mapping(bytes32 eventId => bytes32 seed) private ticketBallotSeed;
 	mapping(bytes32 eventId => uint256 ticketCount) private ticketsRequestedCount;
@@ -47,6 +47,7 @@ contract EventRegistry {
     error OutOfBounds();
 	error TicketsAlreadyAllocated();
 	error TicketSaleHasntStarted();
+	error TicketSaleFinished();
 	error TooManyFriends();
 	error EventOversubscribed();
 	error AlreadyHasGroup();
@@ -56,6 +57,7 @@ contract EventRegistry {
     event EventRegistered(bytes32 indexed eventId, uint32 indexed eventTimestamp);
 	event BallotEntered(bytes32 indexed eventId, address indexed groupOwner, address[] groupMembers);
 	event TicketReceived(bytes32 indexed eventId, address receiver);
+	event TicketsAllocated(bytes32 indexed eventId, uint256 ballotSize);
 
     // MODIFIERS
 
@@ -93,7 +95,8 @@ contract EventRegistry {
 
 		getTicketContract[eventHash] = new Ticket{salt: eventHash}(
 			title,
-			string.concat('TICKIT-', _getShortHash(eventHash))
+			string.concat('TICKIT-', _getShortHash(eventHash)),
+			eventHash
 		);
 
         return eventHash;
@@ -104,8 +107,12 @@ contract EventRegistry {
 		uint256 numberOfTicketsRequested = friends.length+1;
 
 		// make sure we are below the max group size
-		if (numberOfTicketsRequested >= eventInfo.maxGroupSize) {
+		if (numberOfTicketsRequested > eventInfo.maxGroupSize) {
 			revert TooManyFriends();
+		}
+
+		if (block.timestamp > eventInfo.ticketSaleEnd) {
+			revert TicketSaleFinished();
 		}
 
 		// If we are in ballot mode, let anyone apply for tickets. 
@@ -157,6 +164,8 @@ contract EventRegistry {
 		ticketBallotSeed[eventId] = keccak256(abi.encode(block.prevrandao));
 		// snapshot the number of tickets requested in ballot
 		ticketBallotAllocation[eventId] = ticketsRequestedCount[eventId];
+
+		emit TicketsAllocated(eventId, ticketsRequestedCount[eventId]);
 	}
 
 	function claimTickets(bytes32 eventId) external {
@@ -183,6 +192,21 @@ contract EventRegistry {
 			}
 
 		}
+	}
+
+	function checkBallotGroupAllocation(bytes32 eventId, uint96 groupId) external view returns (uint256) {
+		EventInformation memory eventInfo = _getEventById(eventId);
+		if (groupId == 0) {
+			revert DidNotApplyForTickets();
+		}
+		if (ticketBallotSeed[eventId] == EMPTY_BYTES32) {
+			revert TicketSaleHasntStarted();
+		}
+		bytes32 seed = keccak256(abi.encode(ticketBallotSeed[eventId], groupId));
+		if (uint256(seed) % ticketBallotAllocation[eventId] < eventInfo.maxEventCapacity * (groupFriends[groupId].length+1)) {
+			return groupFriends[groupId].length+1;
+		}
+		return 0;
 	}
 
     function getEventById(bytes32 eventId) external view returns (EventInformation memory) {
