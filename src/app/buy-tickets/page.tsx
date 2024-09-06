@@ -1,5 +1,42 @@
 'use client';
 
+import EventCard from '@/components/EventCard';
+import {
+  useReadEventRegistryGetNumberOfEvents,
+  useReadEventRegistryListEvents,
+} from '@/generated';
+
 export default function Page() {
-  return <div>Listing all events here</div>;
+  const { data: totalNumberOfEvents } = useReadEventRegistryGetNumberOfEvents();
+  const offset = 0;
+  // this will overflow at some point... probably not any time soon though
+  const limit = Math.min(10, Number(totalNumberOfEvents ?? 0));
+  const { data: paginatedEvents } = useReadEventRegistryListEvents({
+    args: [BigInt(offset), BigInt(limit)],
+  });
+
+  if (totalNumberOfEvents === undefined || paginatedEvents === undefined) {
+    return 'Something went wrong';
+  }
+
+  return (
+    <div>
+      <h3 className="font-semibold text-lg">Listing all events here</h3>
+      {paginatedEvents.length > 0 && (
+        <ul>
+          {paginatedEvents.map((event, i) => {
+            return (
+              <li key={i}>
+                <EventCard event={event} />
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      <p>
+        Showing {offset}-{offset + limit} of {Number(totalNumberOfEvents)}
+      </p>
+    </div>
+  );
 }
