@@ -1,4 +1,12 @@
 import { cn, color, background } from '@coinbase/onchainkit/theme';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 export type Event = {
   title: string;
@@ -20,22 +28,19 @@ interface EventCardProps {
 }
 export default function EventCard({ event }: EventCardProps) {
   return (
-    <div
-      className={cn(
-        background.default,
-        color.foreground,
-        'border-black border rounded-xl p-4',
-      )}
-    >
-      <h2 className="text-lg font-bold">{event.title}</h2>
-      <div className="flex flex-row gap-4">
+    <Card>
+      <CardHeader>
+        <CardTitle>{event.title}</CardTitle>
+        <CardDescription>{event.description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>Event on: {toDate(event.eventTimestamp)}</p>
+        <p>Event Capacity: {event.maxEventCapacity}</p>
+        <p>Max Group Size: {event.maxGroupSize}</p>
+      </CardContent>
+      <CardFooter>
         <p className="italic font-light">{event.location}</p>
-        <p>{toDate(event.eventTimestamp)}</p>
-      </div>
-      <p>{event.description}</p>
-      <br />
-      <p>Event Capacity: {event.maxEventCapacity}</p>
-      <p>Max Group Size: {event.maxGroupSize}</p>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }

@@ -44,7 +44,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   });
 
   if (!result) {
-	  return "We couldn't find that event. Sorry!"
+    return "We couldn't find that event. Sorry!";
   }
 
   if (!result || !userNode || !friendNodes) {
@@ -60,28 +60,33 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <div className="flex flex-col gap-8">
       <EventCard event={result} />
-	  {friendsList.length > 0 ? (
-		  <>
-      <label className="text-lg">
-        Select your friends to apply for this event
-      </label>
-      <MultiSelect
-        options={friendsList}
-        onValueChange={setSelectedFriends}
-        defaultValue={selectedFriends}
-        placeholder="Choose your friends"
-        maxCount={result.maxGroupSize}
-      />
-      <p>
-        If you are lucky enough to get tickets, you and all your friends will be
-        able to attend together
-      </p>
-	  </>
-	  ) : <div>
-	  <p>Sorry, we couldn't find any of your friends.</p>
-	  <p>Go to <span className="underline">basefriends</span> to add your friends.</p>
-	  <p>You can still apply for tickets on your own though!</p>
-	  </div>}
+      {friendsList.length > 0 ? (
+        <>
+          <label className="text-lg">
+            Select your friends to apply for this event
+          </label>
+          <MultiSelect
+            options={friendsList}
+            onValueChange={setSelectedFriends}
+            defaultValue={selectedFriends}
+            placeholder="Choose your friends"
+            maxCount={result.maxGroupSize}
+          />
+          <p>
+            If you are lucky enough to get tickets, you and all your friends
+            will be able to attend together
+          </p>
+        </>
+      ) : (
+        <div>
+          <p>Sorry, we couldn't find any of your friends.</p>
+          <p>
+            Go to <span className="underline">basefriends</span> to add your
+            friends.
+          </p>
+          <p>You can still apply for tickets on your own though!</p>
+        </div>
+      )}
       <Button>Apply for Tickets!</Button>
     </div>
   );

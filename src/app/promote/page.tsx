@@ -6,9 +6,7 @@ import {
   TransactionStatusAction,
   TransactionStatusLabel,
 } from '@coinbase/onchainkit/transaction';
-import {
-  BASE_SEPOLIA_CHAIN_ID,
-} from '../../constants';
+import { BASE_SEPOLIA_CHAIN_ID } from '../../constants';
 import { eventRegistryAddress, eventRegistryConfig } from 'src/generated';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -51,7 +49,7 @@ export default function Page() {
       ticketSaleStart: undefined,
     },
   });
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <div>
@@ -201,16 +199,20 @@ export default function Page() {
         className="w-[450px]"
         chainId={BASE_SEPOLIA_CHAIN_ID}
         onError={(err) => console.error(err)}
-        onSuccess={({transactionReceipts}) => {
-			transactionReceipts.forEach((receipt) => {
-				receipt.logs.forEach((log) => {
-					if(log.address == eventRegistryAddress.toLowerCase() && log.topics[0] == "0xd7a8ceb3170063379fe6831c546e506510ed2ff47586837e8c52320e996d361e") {
-						console.log('Navigating to ', log.topics[1])
-						router.push(`buy-tickets/${log.topics[1]}`)
-					}
-				})
-			})
-		}}
+        onSuccess={({ transactionReceipts }) => {
+          transactionReceipts.forEach((receipt) => {
+            receipt.logs.forEach((log) => {
+              if (
+                log.address == eventRegistryAddress.toLowerCase() &&
+                log.topics[0] ==
+                  '0xd7a8ceb3170063379fe6831c546e506510ed2ff47586837e8c52320e996d361e'
+              ) {
+                console.log('Navigating to ', log.topics[1]);
+                router.push(`buy-tickets/${log.topics[1]}`);
+              }
+            });
+          });
+        }}
       >
         <TransactionButton
           disabled={!form.formState.isValid}
