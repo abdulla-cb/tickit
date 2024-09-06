@@ -17,10 +17,12 @@ contract EventRegistry {
 
     // STATE VARIABLES
     mapping(bytes32 eventId => EventInformation eventInformation) private eventInformationById;
+    bytes32[] private allEvents;
 
     // ERRORS
     error EventAlreadyRegistered();
     error EventNotFound();
+    error OutOfBounds();
 
     // EVENTS
     event EventRegistered(bytes32 indexed eventHash, uint32 indexed eventTimestamp);
@@ -56,11 +58,28 @@ contract EventRegistry {
         }
 
         eventInformationById[eventHash] = eventInformation;
+        allEvents.push(eventHash);
         emit EventRegistered(eventHash, eventTimestamp);
+
         return eventHash;
     }
 
     function getEventById(bytes32 eventId) external view returns (EventInformation memory) {
+        return _getEventById(eventId);
+    }
+
+    function listEvents(uint256 offset, uint256 limit) external view returns (EventInformation[] memory) {
+        if (offset + limit > allEvents.length) {
+            revert OutOfBounds();
+        }
+        EventInformation[] memory infos = new EventInformation[](limit);
+        for (uint256 i = 0; i < limit; i++) {
+            infos[i] = _getEventById(allEvents[i + offset]);
+        }
+        return infos;
+    }
+
+    function _getEventById(bytes32 eventId) internal view returns (EventInformation memory) {
         if (eventInformationById[eventId].eventTimestamp > 0) {
             return eventInformationById[eventId];
         }

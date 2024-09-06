@@ -10,10 +10,10 @@ contract TickitView is Script {
 
     function run() public view {
         EventRegistry.EventInformation memory eventInfo = eventRegistry.getEventById(myEvent);
-		console.log("===Printing info for event===");
-		console.logBytes32(myEvent);
+        console.log("===Printing info for event===");
+        console.logBytes32(myEvent);
         console.log(eventInfo.title);
-		console.log(eventInfo.description);
-		console.log(eventInfo.location);
+        console.log(eventInfo.description);
+        console.log(eventInfo.location);
     }
 }
