@@ -5,12 +5,12 @@ import { useState } from 'react';
 import Button from 'src/components/Button';
 import EventCard from 'src/components/EventCard';
 import {
-    l2ResolverConfig,
-    useReadBasefriendsGetFollowNodes,
+  l2ResolverConfig,
+  useReadBasefriendsGetFollowNodes,
   useReadEventRegistryGetEventById,
   useReadReverseRegistrarNode,
 } from 'src/generated';
-import { useAccount, useReadContracts} from 'wagmi';
+import { useAccount, useReadContracts } from 'wagmi';
 
 export default function Page({ params }: { params: { slug: string } }) {
   const [selectedFriends, setSelectedFriends] = useState<string[]>([]);
@@ -32,16 +32,16 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   // get their follows
   const { data: friendNodes } = useReadBasefriendsGetFollowNodes({
-    args: [ userNode ?? '0x' ],
+    args: [userNode ?? '0x'],
   });
 
-  const {data: friendData} = useReadContracts({
-	  contracts: (friendNodes ?? []).map((node) => ({
-		  ...l2ResolverConfig, 
-		  functionName: "name", 
-		  args: [node as `0x${string}`] 
-	  })),
-  })
+  const { data: friendData } = useReadContracts({
+    contracts: (friendNodes ?? []).map((node) => ({
+      ...l2ResolverConfig,
+      functionName: 'name',
+      args: [node as `0x${string}`],
+    })),
+  });
 
   if (!result || !userNode || !friendNodes || !friendData) {
     //should probs do suspense..
@@ -49,9 +49,9 @@ export default function Page({ params }: { params: { slug: string } }) {
   }
 
   const friendsList = friendNodes.map((node, i) => ({
-	  value: node,
-	  label: friendData[i].result ?? "Unknown"
-  }))
+    value: node,
+    label: friendData[i].result ?? 'Unknown',
+  }));
 
   return (
     <div className="flex flex-col gap-8">
