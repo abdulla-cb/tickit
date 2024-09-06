@@ -16,16 +16,12 @@ export default function Page() {
     args: [BigInt(offset), BigInt(limit)],
   });
 
-  if (totalNumberOfEvents === undefined || paginatedEvents === undefined) {
-    return 'Something went wrong';
-  }
-
   return (
     <div>
       <h3 className="font-semibold text-lg">Listing all events here</h3>
-      {paginatedEvents.length > 0 && (
+      {(paginatedEvents ?? []).length > 0 && (
         <ul>
-          {paginatedEvents.map((event, i) => {
+          {(paginatedEvents ?? []).map((event, i) => {
             return (
               <li key={i}>
 			  <Link href={`/buy-tickets/${event.hash}`}>
@@ -38,7 +34,7 @@ export default function Page() {
       )}
 
       <p>
-        Showing {offset}-{offset + limit} of {Number(totalNumberOfEvents)}
+        Showing {offset}-{offset + limit} of {isNaN(Number(totalNumberOfEvents)) ? 0 : Number(totalNumberOfEvents)}
       </p>
     </div>
   );
