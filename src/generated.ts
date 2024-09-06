@@ -630,7 +630,7 @@ export const eventRegistryAbi = [
     outputs: [
       {
         name: '',
-        internalType: 'struct EventRegistry.EventInformation',
+        internalType: 'struct IEventRegistry.EventInformation',
         type: 'tuple',
         components: [
           { name: 'title', internalType: 'string', type: 'string' },
@@ -670,8 +670,8 @@ export const eventRegistryAbi = [
     name: 'getTicketContract',
     outputs: [
       {
-        name: 'ticketContract',
-        internalType: 'contract Ticket',
+        name: 'tickeContract',
+        internalType: 'contract ITicket',
         type: 'address',
       },
     ],
@@ -694,13 +694,13 @@ export const eventRegistryAbi = [
     outputs: [
       {
         name: '',
-        internalType: 'struct EventRegistry.EventInformationWithHash[]',
+        internalType: 'struct IEventRegistry.EventInformationWithHash[]',
         type: 'tuple[]',
         components: [
           { name: 'hash', internalType: 'bytes32', type: 'bytes32' },
           {
             name: 'info',
-            internalType: 'struct EventRegistry.EventInformation',
+            internalType: 'struct IEventRegistry.EventInformation',
             type: 'tuple',
             components: [
               { name: 'title', internalType: 'string', type: 'string' },
@@ -852,7 +852,7 @@ export const eventRegistryAbi = [
 ] as const
 
 export const eventRegistryAddress =
-  '0xEAAF82D0af408F3F04adbcc688Ed7754071bEd9C' as const
+  '0x34822b2cdb272A68b4657fBbE93529399473efa4' as const
 
 export const eventRegistryConfig = {
   address: eventRegistryAddress,
@@ -1574,6 +1574,256 @@ export const ierc721TokenReceiverAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IEventRegistry
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iEventRegistryAbi = [
+  {
+    type: 'function',
+    inputs: [
+      { name: 'eventId', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'groupId', internalType: 'uint96', type: 'uint96' },
+    ],
+    name: 'checkBallotGroupAllocation',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'eventId', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'claimTickets',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'eventId', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getEventById',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct IEventRegistry.EventInformation',
+        type: 'tuple',
+        components: [
+          { name: 'title', internalType: 'string', type: 'string' },
+          { name: 'description', internalType: 'string', type: 'string' },
+          { name: 'location', internalType: 'string', type: 'string' },
+          { name: 'ticketSaleStart', internalType: 'uint32', type: 'uint32' },
+          { name: 'ticketSaleEnd', internalType: 'uint32', type: 'uint32' },
+          { name: 'eventTimestamp', internalType: 'uint32', type: 'uint32' },
+          { name: 'eventOwner', internalType: 'address', type: 'address' },
+          { name: 'maxEventCapacity', internalType: 'uint32', type: 'uint32' },
+          { name: 'maxGroupSize', internalType: 'uint32', type: 'uint32' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'eventId', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'groupOwner', internalType: 'address', type: 'address' },
+    ],
+    name: 'getEventUserGroup',
+    outputs: [{ name: 'groupId', internalType: 'uint96', type: 'uint96' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getNumberOfEvents',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'eventId', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getTicketContract',
+    outputs: [
+      {
+        name: 'ticketContract',
+        internalType: 'contract ITicket',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'eventId', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'issueTickets',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'offset', internalType: 'uint256', type: 'uint256' },
+      { name: 'limit', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'listEvents',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct IEventRegistry.EventInformationWithHash[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'hash', internalType: 'bytes32', type: 'bytes32' },
+          {
+            name: 'info',
+            internalType: 'struct IEventRegistry.EventInformation',
+            type: 'tuple',
+            components: [
+              { name: 'title', internalType: 'string', type: 'string' },
+              { name: 'description', internalType: 'string', type: 'string' },
+              { name: 'location', internalType: 'string', type: 'string' },
+              {
+                name: 'ticketSaleStart',
+                internalType: 'uint32',
+                type: 'uint32',
+              },
+              { name: 'ticketSaleEnd', internalType: 'uint32', type: 'uint32' },
+              {
+                name: 'eventTimestamp',
+                internalType: 'uint32',
+                type: 'uint32',
+              },
+              { name: 'eventOwner', internalType: 'address', type: 'address' },
+              {
+                name: 'maxEventCapacity',
+                internalType: 'uint32',
+                type: 'uint32',
+              },
+              { name: 'maxGroupSize', internalType: 'uint32', type: 'uint32' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'title', internalType: 'string', type: 'string' },
+      { name: 'description', internalType: 'string', type: 'string' },
+      { name: 'location', internalType: 'string', type: 'string' },
+      { name: 'ticketSaleStart', internalType: 'uint32', type: 'uint32' },
+      { name: 'ticketSaleEnd', internalType: 'uint32', type: 'uint32' },
+      { name: 'eventTimestamp', internalType: 'uint32', type: 'uint32' },
+      { name: 'maxEventCapacity', internalType: 'uint32', type: 'uint32' },
+      { name: 'maxGroupSize', internalType: 'uint32', type: 'uint32' },
+    ],
+    name: 'registerEvent',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'eventId', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'friends', internalType: 'address[]', type: 'address[]' },
+    ],
+    name: 'requestTicket',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'eventId',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'groupOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'groupMembers',
+        internalType: 'address[]',
+        type: 'address[]',
+        indexed: false,
+      },
+    ],
+    name: 'BallotEntered',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'eventId',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'eventTimestamp',
+        internalType: 'uint32',
+        type: 'uint32',
+        indexed: true,
+      },
+    ],
+    name: 'EventRegistered',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'eventId',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'receiver',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'TicketReceived',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'eventId',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'ballotSize',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'TicketsAllocated',
+  },
+  { type: 'error', inputs: [], name: 'AlreadyHasGroup' },
+  { type: 'error', inputs: [], name: 'DidNotApplyForTickets' },
+  { type: 'error', inputs: [], name: 'EventAlreadyRegistered' },
+  { type: 'error', inputs: [], name: 'EventNotFound' },
+  { type: 'error', inputs: [], name: 'EventOversubscribed' },
+  { type: 'error', inputs: [], name: 'OutOfBounds' },
+  { type: 'error', inputs: [], name: 'TicketSaleFinished' },
+  { type: 'error', inputs: [], name: 'TicketSaleHasntStarted' },
+  { type: 'error', inputs: [], name: 'TicketsAlreadyAllocated' },
+  { type: 'error', inputs: [], name: 'TooManyFriends' },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // IMulticall3
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1837,6 +2087,184 @@ export const iNameResolverAbi = [
     ],
     name: 'NameChanged',
   },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ITicket
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iTicketAbi = [
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'getApproved',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'address', type: 'address' },
+      { name: '', internalType: 'address', type: 'address' },
+    ],
+    name: 'isApprovedForAll',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'to', internalType: 'address', type: 'address' }],
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'ownerOf',
+    outputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'safeTransferFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'data', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'safeTransferFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'operator', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setApprovalForAll',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'symbol',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
+    name: 'tokenURI',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'operator',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'ApprovalForAll',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+    ],
+    name: 'Transfer',
+  },
+  { type: 'error', inputs: [], name: 'OnlyEventRegistry' },
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4416,7 +4844,6 @@ export const ticketAbi = [
     type: 'constructor',
     inputs: [
       { name: '_name', internalType: 'string', type: 'string' },
-      { name: '_symbol', internalType: 'string', type: 'string' },
       { name: '_eventId', internalType: 'bytes32', type: 'bytes32' },
     ],
     stateMutability: 'nonpayable',
@@ -14051,6 +14478,194 @@ export const useSimulateIerc721TokenReceiverOnErc721Received =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iEventRegistryAbi}__
+ */
+export const useReadIEventRegistry = /*#__PURE__*/ createUseReadContract({
+  abi: iEventRegistryAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"checkBallotGroupAllocation"`
+ */
+export const useReadIEventRegistryCheckBallotGroupAllocation =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iEventRegistryAbi,
+    functionName: 'checkBallotGroupAllocation',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"getEventById"`
+ */
+export const useReadIEventRegistryGetEventById =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iEventRegistryAbi,
+    functionName: 'getEventById',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"getEventUserGroup"`
+ */
+export const useReadIEventRegistryGetEventUserGroup =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iEventRegistryAbi,
+    functionName: 'getEventUserGroup',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"getNumberOfEvents"`
+ */
+export const useReadIEventRegistryGetNumberOfEvents =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iEventRegistryAbi,
+    functionName: 'getNumberOfEvents',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"getTicketContract"`
+ */
+export const useReadIEventRegistryGetTicketContract =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iEventRegistryAbi,
+    functionName: 'getTicketContract',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"listEvents"`
+ */
+export const useReadIEventRegistryListEvents =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iEventRegistryAbi,
+    functionName: 'listEvents',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iEventRegistryAbi}__
+ */
+export const useWriteIEventRegistry = /*#__PURE__*/ createUseWriteContract({
+  abi: iEventRegistryAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"claimTickets"`
+ */
+export const useWriteIEventRegistryClaimTickets =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: iEventRegistryAbi,
+    functionName: 'claimTickets',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"issueTickets"`
+ */
+export const useWriteIEventRegistryIssueTickets =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: iEventRegistryAbi,
+    functionName: 'issueTickets',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"registerEvent"`
+ */
+export const useWriteIEventRegistryRegisterEvent =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: iEventRegistryAbi,
+    functionName: 'registerEvent',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"requestTicket"`
+ */
+export const useWriteIEventRegistryRequestTicket =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: iEventRegistryAbi,
+    functionName: 'requestTicket',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iEventRegistryAbi}__
+ */
+export const useSimulateIEventRegistry =
+  /*#__PURE__*/ createUseSimulateContract({ abi: iEventRegistryAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"claimTickets"`
+ */
+export const useSimulateIEventRegistryClaimTickets =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iEventRegistryAbi,
+    functionName: 'claimTickets',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"issueTickets"`
+ */
+export const useSimulateIEventRegistryIssueTickets =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iEventRegistryAbi,
+    functionName: 'issueTickets',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"registerEvent"`
+ */
+export const useSimulateIEventRegistryRegisterEvent =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iEventRegistryAbi,
+    functionName: 'registerEvent',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iEventRegistryAbi}__ and `functionName` set to `"requestTicket"`
+ */
+export const useSimulateIEventRegistryRequestTicket =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iEventRegistryAbi,
+    functionName: 'requestTicket',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iEventRegistryAbi}__
+ */
+export const useWatchIEventRegistryEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: iEventRegistryAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iEventRegistryAbi}__ and `eventName` set to `"BallotEntered"`
+ */
+export const useWatchIEventRegistryBallotEnteredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: iEventRegistryAbi,
+    eventName: 'BallotEntered',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iEventRegistryAbi}__ and `eventName` set to `"EventRegistered"`
+ */
+export const useWatchIEventRegistryEventRegisteredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: iEventRegistryAbi,
+    eventName: 'EventRegistered',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iEventRegistryAbi}__ and `eventName` set to `"TicketReceived"`
+ */
+export const useWatchIEventRegistryTicketReceivedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: iEventRegistryAbi,
+    eventName: 'TicketReceived',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iEventRegistryAbi}__ and `eventName` set to `"TicketsAllocated"`
+ */
+export const useWatchIEventRegistryTicketsAllocatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: iEventRegistryAbi,
+    eventName: 'TicketsAllocated',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__
  */
 export const useReadIMulticall3 = /*#__PURE__*/ createUseReadContract({
@@ -14293,6 +14908,212 @@ export const useWatchINameResolverNameChangedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: iNameResolverAbi,
     eventName: 'NameChanged',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iTicketAbi}__
+ */
+export const useReadITicket = /*#__PURE__*/ createUseReadContract({
+  abi: iTicketAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadITicketBalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: iTicketAbi,
+  functionName: 'balanceOf',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"getApproved"`
+ */
+export const useReadITicketGetApproved = /*#__PURE__*/ createUseReadContract({
+  abi: iTicketAbi,
+  functionName: 'getApproved',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"isApprovedForAll"`
+ */
+export const useReadITicketIsApprovedForAll =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iTicketAbi,
+    functionName: 'isApprovedForAll',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"name"`
+ */
+export const useReadITicketName = /*#__PURE__*/ createUseReadContract({
+  abi: iTicketAbi,
+  functionName: 'name',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"ownerOf"`
+ */
+export const useReadITicketOwnerOf = /*#__PURE__*/ createUseReadContract({
+  abi: iTicketAbi,
+  functionName: 'ownerOf',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadITicketSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iTicketAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"symbol"`
+ */
+export const useReadITicketSymbol = /*#__PURE__*/ createUseReadContract({
+  abi: iTicketAbi,
+  functionName: 'symbol',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"tokenURI"`
+ */
+export const useReadITicketTokenUri = /*#__PURE__*/ createUseReadContract({
+  abi: iTicketAbi,
+  functionName: 'tokenURI',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iTicketAbi}__
+ */
+export const useWriteITicket = /*#__PURE__*/ createUseWriteContract({
+  abi: iTicketAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteITicketApprove = /*#__PURE__*/ createUseWriteContract({
+  abi: iTicketAbi,
+  functionName: 'approve',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"mint"`
+ */
+export const useWriteITicketMint = /*#__PURE__*/ createUseWriteContract({
+  abi: iTicketAbi,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"safeTransferFrom"`
+ */
+export const useWriteITicketSafeTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: iTicketAbi,
+    functionName: 'safeTransferFrom',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"setApprovalForAll"`
+ */
+export const useWriteITicketSetApprovalForAll =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: iTicketAbi,
+    functionName: 'setApprovalForAll',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteITicketTransferFrom = /*#__PURE__*/ createUseWriteContract(
+  { abi: iTicketAbi, functionName: 'transferFrom' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iTicketAbi}__
+ */
+export const useSimulateITicket = /*#__PURE__*/ createUseSimulateContract({
+  abi: iTicketAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateITicketApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iTicketAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"mint"`
+ */
+export const useSimulateITicketMint = /*#__PURE__*/ createUseSimulateContract({
+  abi: iTicketAbi,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"safeTransferFrom"`
+ */
+export const useSimulateITicketSafeTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iTicketAbi,
+    functionName: 'safeTransferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"setApprovalForAll"`
+ */
+export const useSimulateITicketSetApprovalForAll =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iTicketAbi,
+    functionName: 'setApprovalForAll',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iTicketAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateITicketTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iTicketAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iTicketAbi}__
+ */
+export const useWatchITicketEvent = /*#__PURE__*/ createUseWatchContractEvent({
+  abi: iTicketAbi,
+})
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iTicketAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchITicketApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: iTicketAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iTicketAbi}__ and `eventName` set to `"ApprovalForAll"`
+ */
+export const useWatchITicketApprovalForAllEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: iTicketAbi,
+    eventName: 'ApprovalForAll',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iTicketAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchITicketTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: iTicketAbi,
+    eventName: 'Transfer',
   })
 
 /**
