@@ -64,6 +64,17 @@ contract EventRegistry {
         return eventHash;
     }
 
+	function requestTicket(bytes32 eventId, bytes32[] calldata friendNodes) external {
+		// Issue the people ticket NFTs
+		// these NFTs represent ballot position
+	}
+
+	function issueTickets(bytes32 eventId) external {
+		// can only be called once the ticket sale has started
+		// if the number of users with ballot tickets exceeds the capacity of the event, then a ballot is initiated to select who can attend
+		// if the nuber of users is below capacity, then all users will receive tickets
+	}
+
     function getEventById(bytes32 eventId) external view returns (EventInformation memory) {
         return _getEventById(eventId);
     }
