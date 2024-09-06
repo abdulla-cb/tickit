@@ -75,6 +75,10 @@ export default function Page({ params }: { params: { slug: string } }) {
     notFound();
   }
 
+  if (!address) {
+    return 'You should probably log in... Hit one of those buttons at the top';
+  }
+
   if (!result || !userNode || !friendNodes) {
     //should probs do suspense..
     return;

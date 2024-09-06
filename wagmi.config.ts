@@ -29,7 +29,12 @@ export default defineConfig({
       deployments: {
         Basefriends: '0x128aa5d8dad4148a8eb1f5aebda0e0a62510b87e',
       },
-      exclude: ['IMulticall3.sol/**', 'IERC165.sol/**', '**.s.sol/**', '**.t.sol/**'],
+      exclude: [
+        'IMulticall3.sol/**',
+        'IERC165.sol/**',
+        '**.s.sol/**',
+        '**.t.sol/**',
+      ],
     }),
     react(),
   ],
