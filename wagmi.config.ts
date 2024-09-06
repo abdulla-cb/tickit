@@ -27,9 +27,9 @@ export default defineConfig({
     foundry({
       project: './onchain/lib/basefriends',
       deployments: {
-        Basefriends: '0xfd8d9995d894f8cb0b9898bf4dfb64ef03ff9725',
+        Basefriends: '0x128aa5d8dad4148a8eb1f5aebda0e0a62510b87e',
       },
-      exclude: ['IMulticall3.sol/**', 'IERC165.sol/**'],
+      exclude: ['IMulticall3.sol/**', 'IERC165.sol/**', '**.s.sol/**', '**.t.sol/**'],
     }),
     react(),
   ],
