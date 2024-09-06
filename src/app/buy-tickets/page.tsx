@@ -5,6 +5,7 @@ import {
   useReadEventRegistryGetNumberOfEvents,
   useReadEventRegistryListEvents,
 } from '@/generated';
+import Link from 'next/link';
 
 export default function Page() {
   const { data: totalNumberOfEvents } = useReadEventRegistryGetNumberOfEvents();
@@ -27,7 +28,9 @@ export default function Page() {
           {paginatedEvents.map((event, i) => {
             return (
               <li key={i}>
-                <EventCard event={event} />
+			  <Link href={`/buy-tickets/${event.hash}`}>
+                <EventCard event={event.info} />
+				</Link>
               </li>
             );
           })}

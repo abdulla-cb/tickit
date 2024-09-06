@@ -21,7 +21,7 @@ export default defineConfig({
     foundry({
       project: './onchain',
       deployments: {
-        EventRegistry: '0x13b56638c430BdE7B7c290C6Ca65958f30981a8a',
+        EventRegistry: '0xEAAF82D0af408F3F04adbcc688Ed7754071bEd9C',
       },
     }),
     foundry({
