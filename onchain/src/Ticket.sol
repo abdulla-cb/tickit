@@ -16,7 +16,7 @@ contract Ticket is ERC721 {
     error OnlyEventRegistry();
 
     constructor(string memory _name, bytes32 _eventId)
-        ERC721(_name, LibString.concat("TICKIT-",LibString.toHexStringNoPrefix(uint256(_eventId)).slice(0, 8)))
+        ERC721(_name, LibString.concat("TICKIT-", LibString.toHexStringNoPrefix(uint256(_eventId)).slice(0, 8)))
     {
         eventRegistry = IEventRegistry(msg.sender);
         eventId = _eventId;
@@ -47,8 +47,8 @@ contract Ticket is ERC721 {
                         '{"name": "Ticket #',
                         LibString.toString(tokenId),
                         '", "description": "',
-						eventInfo.description,
-						'", "image": "data:image/svg+xml;base64,',
+                        eventInfo.description,
+                        '", "image": "data:image/svg+xml;base64,',
                         Base64.encode(bytes(output)),
                         '"}'
                     )

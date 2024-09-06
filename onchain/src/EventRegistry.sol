@@ -139,11 +139,7 @@ contract EventRegistry is IEventRegistry {
 
         // maybe you got lucky... maybe you didn't
         // this function might overflow - need to add checks
-        if (
-            checkSeed(
-                seed, ticketBallotAllocation[eventId], eventInfo.maxEventCapacity, groupFriends[groupId].length + 1
-            )
-        ) {
+        if (checkSeed(seed, ticketBallotAllocation[eventId], eventInfo.maxEventCapacity)) {
             _distributeTickets(eventId, msg.sender, groupFriends[groupId]);
         }
     }
@@ -157,11 +153,7 @@ contract EventRegistry is IEventRegistry {
             revert TicketSaleHasntStarted();
         }
         bytes32 seed = keccak256(abi.encode(ticketBallotSeed[eventId], groupId));
-        if (
-            checkSeed(
-                seed, ticketBallotAllocation[eventId], eventInfo.maxEventCapacity, groupFriends[groupId].length + 1
-            )
-        ) {
+        if (checkSeed(seed, ticketBallotAllocation[eventId], eventInfo.maxEventCapacity)) {
             return groupFriends[groupId].length + 1;
         }
         return 0;
@@ -181,12 +173,12 @@ contract EventRegistry is IEventRegistry {
         }
     }
 
-    function checkSeed(bytes32 seed, uint256 ballotedAllocation, uint256 maxEventCapacity, uint256 usersInGroup)
+    function checkSeed(bytes32 seed, uint256 ballotedAllocation, uint256 maxEventCapacity)
         internal
         pure
         returns (bool)
     {
-        return (uint256(seed) % ballotedAllocation < maxEventCapacity * usersInGroup);
+        return (uint256(seed) % ballotedAllocation < maxEventCapacity);
     }
 
     function getEventById(bytes32 eventId) external view returns (EventInformation memory) {
