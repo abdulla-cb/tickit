@@ -215,6 +215,10 @@ contract EventRegistry {
         return _getEventById(eventId);
     }
 
+	function getNumberOfEvents() external view returns (uint256) {
+		return allEvents.length;
+	}
+
     function listEvents(uint256 offset, uint256 limit) external view returns (EventInformation[] memory) {
         if (offset + limit > allEvents.length) {
             revert OutOfBounds();

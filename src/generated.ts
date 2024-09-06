@@ -1579,6 +1579,13 @@ export const eventRegistryAbi = [
   },
   {
     type: 'function',
+    inputs: [],
+    name: 'getNumberOfEvents',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [{ name: 'eventId', internalType: 'bytes32', type: 'bytes32' }],
     name: 'getTicketContract',
     outputs: [
@@ -1745,7 +1752,7 @@ export const eventRegistryAbi = [
 ] as const
 
 export const eventRegistryAddress =
-  '0x64d10B0C2202C26338071741663aA955012c8A44' as const
+  '0x13b56638c430BdE7B7c290C6Ca65958f30981a8a' as const
 
 export const eventRegistryConfig = {
   address: eventRegistryAddress,
@@ -15249,6 +15256,16 @@ export const useReadEventRegistryGetEventUserGroup =
     abi: eventRegistryAbi,
     address: eventRegistryAddress,
     functionName: 'getEventUserGroup',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link eventRegistryAbi}__ and `functionName` set to `"getNumberOfEvents"`
+ */
+export const useReadEventRegistryGetNumberOfEvents =
+  /*#__PURE__*/ createUseReadContract({
+    abi: eventRegistryAbi,
+    address: eventRegistryAddress,
+    functionName: 'getNumberOfEvents',
   })
 
 /**
