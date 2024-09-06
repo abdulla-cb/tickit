@@ -1,57 +1,32 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/coinbase/onchainkit/main/site/docs/public/logo/v0-27.png">
-    <img alt="OnchainKit logo vibes" src="https://raw.githubusercontent.com/coinbase/onchainkit/main/site/docs/public/logo/v0-27.png" width="auto">
-  </picture>
-</p>
+# Tickit 
 
-# Onchain App Template
+# Frontend
 
-An Onchain App Template build with [OnchainKit](https://onchainkit.xyz), and ready to be deployed to Vercel.
+Built with onchain kit
+Points to base sepolia where contracts are deployed.
+Can be run with `bun run dev`
 
-Play with it live on https://onchain-app-template.vercel.app
+## Smart Contract
 
-Have fun! ⛵️
+Can run tests with `forge test`
 
-<br />
+Sample script simulating 1M ticket requests can be run with
+`forge script RunBigEvent --block-gas-limit 60000000000`
 
-## Setup
+## Interactions
 
-To ensure all components work seamlessly, set the following environment variables in your `.env` file using `.local.env.example` as a reference.
+Event Promoters can register their events on the `EventRegistry` contract.
+Users are able to request tickets for events.
+Each event has a ticketing window where tickets can be purchased. 
+Users are also able to pre-request tickets before the ticketing window opens.
+If an event is oversubscribed in the pre-request window, then the tickets will be randomly allocated to users.
+When users register, they can provide a list of friends. The smart contracts will ensure that all the friends will receive tickets if the original user receives a ticket.
+Tickets are issued as unique NFTs, with the capability to show further on-chain data.
 
-You can find the API key on the [Coinbase Developer Portal's OnchainKit page](https://portal.cdp.coinbase.com/products/onchainkit). If you don't have an account, you will need to create one. 
+## Notes
 
-You can find your Wallet Connector project ID at [Wallet Connect](https://cloud.walletconnect.com).
+Tickets are allocated via PRNG - it is possible that more tickets are allocated than intended.
 
-```sh
-# See https://portal.cdp.coinbase.com/products/onchainkit
-NEXT_PUBLIC_CDP_API_KEY="GET_FROM_COINBASE_DEVELOPER_PLATFORM"
+### Known issues
 
-# See https://cloud.walletconnect.com
-NEXT_PUBLIC_WC_PROJECT_ID="GET_FROM_WALLET_CONNECT"
-```
-<br />
-
-## Locally run
-
-```sh
-# Install bun in case you don't have it
-bun curl -fsSL <https://bun.sh/install> | bash
-
-# Install packages
-bun i
-
-# Run Next app
-bun run dev
-```
-<br />
-
-## Resources
-
-- [OnchainKit documentation](https://onchainkit.xyz)
-
-<br />
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+- Ticket allocation can be sybil attacked.
