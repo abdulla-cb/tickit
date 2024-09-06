@@ -1,10 +1,12 @@
 'use client';
 
 import { MultiSelect } from '@/components/ui/multi-select';
-import { useState } from 'react';
-import Button from 'src/components/Button';
+import { BASE_SEPOLIA_CHAIN_ID } from '@/constants';
+import { Transaction, TransactionButton, TransactionStatus, TransactionStatusAction, TransactionStatusLabel } from '@coinbase/onchainkit/transaction';
+import { useMemo, useState } from 'react';
 import EventCard from 'src/components/EventCard';
 import {
+    eventRegistryConfig,
   l2ResolverConfig,
   useReadBasefriendsGetFollowNodes,
   useReadEventRegistryGetEventById,
@@ -43,6 +45,14 @@ export default function Page({ params }: { params: { slug: string } }) {
     })),
   });
 
+  const isDisabled = useMemo(() => {
+	  if(!result) {return}
+	  if (selectedFriends.length > (result.maxGroupSize-1)) {
+		  return true
+	  }
+	  return false
+  }, [selectedFriends, result])
+
   if (!result) {
     return "We couldn't find that event. Sorry!";
   }
@@ -70,12 +80,13 @@ export default function Page({ params }: { params: { slug: string } }) {
             onValueChange={setSelectedFriends}
             defaultValue={selectedFriends}
             placeholder="Choose your friends"
-            maxCount={result.maxGroupSize}
+            maxCount={result.maxGroupSize-1}
           />
           <p>
             If you are lucky enough to get tickets, you and all your friends
             will be able to attend together
           </p>
+		  {isDisabled && <p className="text-destructive">The maximum group size for this event is {result.maxGroupSize}</p>}
         </>
       ) : (
         <div>
@@ -87,7 +98,25 @@ export default function Page({ params }: { params: { slug: string } }) {
           <p>You can still apply for tickets on your own though!</p>
         </div>
       )}
-      <Button>Apply for Tickets!</Button>
+	  <Transaction
+	  contracts = {[{...eventRegistryConfig,
+		  functionName: 'requestTicket',
+	  args: [params.slug, []]}]}
+        className="w-[450px]"
+        chainId={BASE_SEPOLIA_CHAIN_ID}
+        onError={(err) => console.error(err)}
+		onSuccess={(res) => window.alert("Contratulations!")}
+	  >
+        <TransactionButton
+          disabled={isDisabled}
+          text="Apply for tickets"
+          className="mt-0 mr-auto ml-auto w-[450px] max-w-full text-[white]"
+        />
+        <TransactionStatus>
+          <TransactionStatusLabel />
+          <TransactionStatusAction />
+        </TransactionStatus>
+	  </Transaction>
     </div>
   );
 }
