@@ -7,3 +7,6 @@
 [submodule "onchain/lib/solmate"]
 	path = onchain/lib/solmate
 	url = https://github.com/transmissions11/solmate
+[submodule "onchain/lib/solady"]
+	path = onchain/lib/solady
+	url = https://github.com/vectorized/solady
